@@ -39,6 +39,7 @@
             TrayIconContextMenu = new ContextMenuStrip(components);
             ExitMenuItem = new ToolStripMenuItem();
             AutoHideWidgetsMenuItem = new ToolStripMenuItem();
+            createTaskWidget1 = new CreateTaskWidget();
             MainMenuPanel.SuspendLayout();
             TrayIconContextMenu.SuspendLayout();
             SuspendLayout();
@@ -50,7 +51,7 @@
             MainMenuPanel.Controls.Add(SettingsButton);
             MainMenuPanel.Controls.Add(CreateButton);
             MainMenuPanel.Controls.Add(LoadButton);
-            MainMenuPanel.Location = new Point(311, 158);
+            MainMenuPanel.Location = new Point(79, 12);
             MainMenuPanel.Name = "MainMenuPanel";
             MainMenuPanel.Size = new Size(200, 229);
             MainMenuPanel.TabIndex = 0;
@@ -87,6 +88,7 @@
             CreateButton.TabIndex = 1;
             CreateButton.Text = "Create";
             CreateButton.UseVisualStyleBackColor = true;
+            CreateButton.Click += CreateButton_Click;
             // 
             // LoadButton
             // 
@@ -114,13 +116,13 @@
             // 
             TrayIconContextMenu.Items.AddRange(new ToolStripItem[] { ExitMenuItem, AutoHideWidgetsMenuItem });
             TrayIconContextMenu.Name = "TrayIconContextMenu";
-            TrayIconContextMenu.Size = new Size(181, 70);
+            TrayIconContextMenu.Size = new Size(173, 48);
             TrayIconContextMenu.ItemClicked += TrayIconContextMenu_ItemClicked;
             // 
             // ExitMenuItem
             // 
             ExitMenuItem.Name = "ExitMenuItem";
-            ExitMenuItem.Size = new Size(180, 22);
+            ExitMenuItem.Size = new Size(172, 22);
             ExitMenuItem.Text = "Exit";
             ExitMenuItem.ToolTipText = "Exits Power Automation";
             // 
@@ -128,14 +130,23 @@
             // 
             AutoHideWidgetsMenuItem.CheckOnClick = true;
             AutoHideWidgetsMenuItem.Name = "AutoHideWidgetsMenuItem";
-            AutoHideWidgetsMenuItem.Size = new Size(180, 22);
+            AutoHideWidgetsMenuItem.Size = new Size(172, 22);
             AutoHideWidgetsMenuItem.Text = "Auto-hide widgets";
+            // 
+            // createTaskWidget1
+            // 
+            createTaskWidget1.BackColor = SystemColors.ActiveCaption;
+            createTaskWidget1.Location = new Point(537, 210);
+            createTaskWidget1.Name = "createTaskWidget1";
+            createTaskWidget1.Size = new Size(200, 233);
+            createTaskWidget1.TabIndex = 1;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(createTaskWidget1);
             Controls.Add(MainMenuPanel);
             Name = "MainForm";
             Text = "Form2";
@@ -155,5 +166,6 @@
         private ContextMenuStrip TrayIconContextMenu;
         private ToolStripMenuItem ExitMenuItem;
         private ToolStripMenuItem AutoHideWidgetsMenuItem;
+        private CreateTaskWidget createTaskWidget1;
     }
 }

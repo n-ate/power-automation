@@ -88,7 +88,6 @@ namespace PowerAutomation
             this.FormBorderStyle = FormBorderStyle.SizableToolWindow; //FormBorderStyle.None;
             this.Load += Form1_Load;
 
-            DraggableControlExtensions.HandleCapturedEvents(msg => this.xLabel1.Text = msg);
         }
 
         private void Form1_Event(object? sender, EventArgs e)

@@ -34,7 +34,6 @@
             CreateButton = new Button();
             LoadButton = new Button();
             MainMenuHeader = new Label();
-            xLabel1 = new Controls.XLabel();
             button1 = new Button();
             MainMenuPanel.SuspendLayout();
             SuspendLayout();
@@ -110,16 +109,6 @@
             MainMenuHeader.Text = "Power Automation";
             MainMenuHeader.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // xLabel1
-            // 
-            xLabel1.AutoSize = true;
-            xLabel1.Interactive = false;
-            xLabel1.Location = new Point(486, 257);
-            xLabel1.Name = "xLabel1";
-            xLabel1.Size = new Size(47, 15);
-            xLabel1.TabIndex = 3;
-            xLabel1.Text = "xLabel1";
-            // 
             // button1
             // 
             button1.Dock = DockStyle.Top;
@@ -137,7 +126,6 @@
             BackColor = Color.LawnGreen;
             ClientSize = new Size(800, 450);
             Controls.Add(MainMenuHeader);
-            Controls.Add(xLabel1);
             Controls.Add(MainMenuPanel);
             Controls.Add(comboBox1);
             Name = "Form1";
@@ -154,7 +142,6 @@
         private Panel MainMenuPanel;
         private Button CreateButton;
         private Button LoadButton;
-        private Controls.XLabel xLabel1;
         private Label MainMenuHeader;
         private Button button1;
     }

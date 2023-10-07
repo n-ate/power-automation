@@ -13,6 +13,8 @@ namespace PowerAutomation
 {
     public partial class MainForm : Form
     {
+        private readonly GlobalEventListener listener;
+
         public MainForm()
         {
             this.TransparencyKey = this.BackColor = Color.Magenta; //makes window background transparent and click-through
@@ -30,6 +32,8 @@ namespace PowerAutomation
 
             this.MainMenuPanel.EnableDragging(); //makes the panel behave like a draggable widget
             this.MainMenuHeader.EnableDragging(MainMenuPanel); //makes the header of the panel draggable
+
+            //listener = new GlobalEventListener();
         }
 
         private void TrayIconContextMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -51,6 +55,11 @@ namespace PowerAutomation
                     break;
                 default: throw new NotImplementedException();
             }
+        }
+
+        private void CreateButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
