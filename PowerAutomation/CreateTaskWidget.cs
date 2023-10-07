@@ -25,7 +25,7 @@ namespace PowerAutomation
 
         }
 
-        private void imageButton1_MouseEnter_1(object sender, EventArgs e)
+        private void imageButton1_MouseEnter(object sender, EventArgs e)
         {
 
         }
