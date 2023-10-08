@@ -22,5 +22,12 @@ namespace PowerAutomation
         {
             return child.IsChildOf(parent);
         }
+
+        public static void SwapWidgetWith(this UserControl value, UserControl widget)
+        {
+            widget.Location = value.Location;
+            value.ParentForm.Controls.Add(widget);
+            value.ParentForm.Controls.Remove(value);
+        }
     }
 }

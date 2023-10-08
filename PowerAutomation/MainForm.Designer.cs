@@ -30,76 +30,13 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            MainMenuPanel = new Panel();
-            MainMenuHeader = new Label();
-            SettingsButton = new Button();
-            CreateButton = new Button();
-            LoadButton = new Button();
             TrayIcon = new NotifyIcon(components);
             TrayIconContextMenu = new ContextMenuStrip(components);
             ExitMenuItem = new ToolStripMenuItem();
             AutoHideWidgetsMenuItem = new ToolStripMenuItem();
-            createTaskWidget1 = new CreateTaskWidget();
-            MainMenuPanel.SuspendLayout();
+            mainMenuWidget1 = new MainMenuWidget();
             TrayIconContextMenu.SuspendLayout();
             SuspendLayout();
-            // 
-            // MainMenuPanel
-            // 
-            MainMenuPanel.BackColor = SystemColors.ActiveCaption;
-            MainMenuPanel.Controls.Add(MainMenuHeader);
-            MainMenuPanel.Controls.Add(SettingsButton);
-            MainMenuPanel.Controls.Add(CreateButton);
-            MainMenuPanel.Controls.Add(LoadButton);
-            MainMenuPanel.Location = new Point(79, 12);
-            MainMenuPanel.Name = "MainMenuPanel";
-            MainMenuPanel.Size = new Size(200, 229);
-            MainMenuPanel.TabIndex = 0;
-            // 
-            // MainMenuHeader
-            // 
-            MainMenuHeader.Font = new Font("Tahoma", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            MainMenuHeader.Location = new Point(16, 5);
-            MainMenuHeader.Margin = new Padding(16, 16, 16, 8);
-            MainMenuHeader.Name = "MainMenuHeader";
-            MainMenuHeader.Size = new Size(168, 40);
-            MainMenuHeader.TabIndex = 0;
-            MainMenuHeader.Text = "Power Automation";
-            MainMenuHeader.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // SettingsButton
-            // 
-            SettingsButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            SettingsButton.Location = new Point(16, 173);
-            SettingsButton.Margin = new Padding(16, 8, 16, 16);
-            SettingsButton.Name = "SettingsButton";
-            SettingsButton.Size = new Size(168, 40);
-            SettingsButton.TabIndex = 4;
-            SettingsButton.Text = "Settings";
-            SettingsButton.UseVisualStyleBackColor = true;
-            // 
-            // CreateButton
-            // 
-            CreateButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            CreateButton.Location = new Point(16, 61);
-            CreateButton.Margin = new Padding(16, 8, 16, 8);
-            CreateButton.Name = "CreateButton";
-            CreateButton.Size = new Size(168, 40);
-            CreateButton.TabIndex = 1;
-            CreateButton.Text = "Create";
-            CreateButton.UseVisualStyleBackColor = true;
-            CreateButton.Click += CreateButton_Click;
-            // 
-            // LoadButton
-            // 
-            LoadButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            LoadButton.Location = new Point(16, 117);
-            LoadButton.Margin = new Padding(16, 8, 16, 8);
-            LoadButton.Name = "LoadButton";
-            LoadButton.Size = new Size(168, 40);
-            LoadButton.TabIndex = 3;
-            LoadButton.Text = "Load";
-            LoadButton.UseVisualStyleBackColor = true;
             // 
             // TrayIcon
             // 
@@ -133,39 +70,32 @@
             AutoHideWidgetsMenuItem.Size = new Size(172, 22);
             AutoHideWidgetsMenuItem.Text = "Auto-hide widgets";
             // 
-            // createTaskWidget1
+            // mainMenuWidget1
             // 
-            createTaskWidget1.BackColor = SystemColors.ActiveCaption;
-            createTaskWidget1.Location = new Point(537, 210);
-            createTaskWidget1.Name = "createTaskWidget1";
-            createTaskWidget1.Size = new Size(200, 233);
-            createTaskWidget1.TabIndex = 1;
+            mainMenuWidget1.BackColor = SystemColors.ActiveCaption;
+            mainMenuWidget1.Location = new Point(210, 104);
+            mainMenuWidget1.Name = "mainMenuWidget1";
+            mainMenuWidget1.Size = new Size(200, 233);
+            mainMenuWidget1.TabIndex = 1;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(createTaskWidget1);
-            Controls.Add(MainMenuPanel);
+            Controls.Add(mainMenuWidget1);
             Name = "MainForm";
             Text = "Form2";
-            MainMenuPanel.ResumeLayout(false);
             TrayIconContextMenu.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Panel MainMenuPanel;
-        private Label MainMenuHeader;
-        private Button LoadButton;
-        private Button CreateButton;
-        private Button SettingsButton;
         private NotifyIcon TrayIcon;
         private ContextMenuStrip TrayIconContextMenu;
         private ToolStripMenuItem ExitMenuItem;
         private ToolStripMenuItem AutoHideWidgetsMenuItem;
-        private CreateTaskWidget createTaskWidget1;
+        private MainMenuWidget createTaskWidget1;
+        private MainMenuWidget mainMenuWidget1;
     }
 }

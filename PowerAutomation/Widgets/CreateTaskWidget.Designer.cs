@@ -28,13 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTaskWidget));
             CreateTaskBackButton = new Button();
             Header = new Label();
             ManipulationTaskButton = new Button();
             DetectionTaskButton = new Button();
             NavigationTaskButton = new Button();
-            imageButton1 = new Controls.ImageButton();
+            BackButton = new Controls.ImageButton();
             SuspendLayout();
             // 
             // CreateTaskBackButton
@@ -45,7 +44,6 @@
             CreateTaskBackButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
             CreateTaskBackButton.FlatStyle = FlatStyle.Flat;
             CreateTaskBackButton.ForeColor = Color.Transparent;
-            CreateTaskBackButton.Image = (Image)resources.GetObject("CreateTaskBackButton.Image");
             CreateTaskBackButton.Location = new Point(3, 3);
             CreateTaskBackButton.Name = "CreateTaskBackButton";
             CreateTaskBackButton.Size = new Size(48, 32);
@@ -96,27 +94,28 @@
             NavigationTaskButton.Text = "Navigation Task";
             NavigationTaskButton.UseVisualStyleBackColor = true;
             // 
-            // imageButton1
+            // BackButton
             // 
-            imageButton1.BackColor = Color.Transparent;
-            imageButton1.FlatAppearance.BorderSize = 0;
-            imageButton1.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            imageButton1.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            imageButton1.FlatStyle = FlatStyle.Flat;
-            imageButton1.Image = (Image)resources.GetObject("imageButton1.Image");
-            imageButton1.Location = new Point(122, 8);
-            imageButton1.MouseOverImage = (Image)resources.GetObject("imageButton1.MouseOverImage");
-            imageButton1.Name = "imageButton1";
-            imageButton1.Size = new Size(75, 40);
-            imageButton1.TabIndex = 6;
-            imageButton1.UseVisualStyleBackColor = false;
+            BackButton.BackColor = Color.Transparent;
+            BackButton.FlatAppearance.BorderSize = 0;
+            BackButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            BackButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            BackButton.FlatStyle = FlatStyle.Flat;
+            BackButton.Image = Properties.Images.back_arrow_32;
+            BackButton.Location = new Point(5, 5);
+            BackButton.MouseOverImage = Properties.Images.back_arrow_light_32;
+            BackButton.Name = "BackButton";
+            BackButton.Size = new Size(37, 32);
+            BackButton.TabIndex = 6;
+            BackButton.UseVisualStyleBackColor = false;
+            BackButton.Click += BackButton_Click;
             // 
             // CreateTaskWidget
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            Controls.Add(imageButton1);
+            Controls.Add(BackButton);
             Controls.Add(CreateTaskBackButton);
             Controls.Add(Header);
             Controls.Add(ManipulationTaskButton);
@@ -124,7 +123,6 @@
             Controls.Add(DetectionTaskButton);
             Name = "CreateTaskWidget";
             Size = new Size(200, 233);
-            Load += CreateTaskWidget_Load;
             ResumeLayout(false);
         }
 
@@ -134,6 +132,6 @@
         private Button ManipulationTaskButton;
         private Button DetectionTaskButton;
         private Button NavigationTaskButton;
-        private Controls.ImageButton imageButton1;
+        private Controls.ImageButton BackButton;
     }
 }

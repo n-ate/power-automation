@@ -30,9 +30,6 @@ namespace PowerAutomation
             //this.ControlBox = false; //removes maximize, minimize, and close buttons from titlebar
             this.FormBorderStyle = FormBorderStyle.None; //removes window chrome
 
-            this.MainMenuPanel.EnableDragging(); //makes the panel behave like a draggable widget
-            this.MainMenuHeader.EnableDragging(MainMenuPanel); //makes the header of the panel draggable
-
             //listener = new GlobalEventListener();
         }
 

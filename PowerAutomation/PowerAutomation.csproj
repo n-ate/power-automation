@@ -9,11 +9,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Form1.cs" />
+    <Compile Remove="Form1.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Form1.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MouseKeyHook" Version="5.7.1" />
     <PackageReference Include="Vanara.PInvoke.User32" Version="3.4.16" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Widgets\MainMenuWidget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Properties\Images.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Images.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -22,6 +39,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Widgets\MainMenuWidget.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Images.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Images.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

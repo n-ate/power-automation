@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PowerAutomation
 {
-    public partial class CreateTaskWidget : UserControl
+    public partial class MainMenuWidget : UserControl
     {
-        public CreateTaskWidget()
+        public MainMenuWidget()
         {
             InitializeComponent();
 
@@ -20,14 +20,14 @@ namespace PowerAutomation
             this.Header.EnableDragging(this); //makes the header of the panel draggable
         }
 
-        private void CreateTaskWidget_Load(object sender, EventArgs e)
+        private void SettingsButton_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void imageButton1_MouseEnter(object sender, EventArgs e)
+        private void CreateButton_Click(object sender, EventArgs e)
         {
-
+            this.SwapWidgetWith(new CreateTaskWidget(this));
         }
     }
 }

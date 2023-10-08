@@ -9,6 +9,8 @@ namespace PowerAutomation.Controls
 {
     public class ImageButton : Button
     {
+        private Image? prehoverImage = null;
+
         [Category("Appearance")]
         public Image MouseOverImage { get; set; }
 
@@ -19,13 +21,20 @@ namespace PowerAutomation.Controls
             FlatAppearance.MouseOverBackColor = Color.Transparent;
             FlatAppearance.BorderSize = 0;
             FlatStyle = FlatStyle.Flat;
-            //this.MouseEnter += this.MouseEnter;
+            MouseEnter += MouseEntered;
+            MouseLeave += MouseLeft;
         }
-        
 
-        public void MouseEnter(object sender, EventArgs e)
+        private void MouseLeft(object? sender, EventArgs e)
         {
-
+            if(prehoverImage is not null) this.Image = prehoverImage;
         }
+
+        public void MouseEntered(object? sender, EventArgs e)
+        {
+            prehoverImage = this.Image;
+            Image = MouseOverImage;
+        }
+
     }
 }
