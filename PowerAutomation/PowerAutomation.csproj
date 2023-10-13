@@ -6,11 +6,13 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Form1.cs" />
     <Compile Remove="Form1.Designer.cs" />
+    <Compile Remove="GlobalEventListener.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,14 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MouseKeyHook" Version="5.7.1" />
+    <PackageReference Include="SharpHook" Version="5.1.0" />
     <PackageReference Include="Vanara.PInvoke.User32" Version="3.4.16" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Widgets\MainMenuWidget.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="Widgets\MainMenuWidget.cs" />
     <Compile Update="Properties\Images.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

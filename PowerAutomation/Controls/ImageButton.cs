@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace PowerAutomation.Controls
 {
     public class ImageButton : Button
     {
         private Image? prehoverImage = null;
-
-        [Category("Appearance")]
-        public Image MouseOverImage { get; set; }
 
         public ImageButton()
         {
@@ -25,10 +17,8 @@ namespace PowerAutomation.Controls
             MouseLeave += MouseLeft;
         }
 
-        private void MouseLeft(object? sender, EventArgs e)
-        {
-            if(prehoverImage is not null) this.Image = prehoverImage;
-        }
+        [Category("Appearance")]
+        public Image? MouseOverImage { get; set; }
 
         public void MouseEntered(object? sender, EventArgs e)
         {
@@ -36,5 +26,9 @@ namespace PowerAutomation.Controls
             Image = MouseOverImage;
         }
 
+        private void MouseLeft(object? sender, EventArgs e)
+        {
+            if (prehoverImage is not null) this.Image = prehoverImage;
+        }
     }
 }

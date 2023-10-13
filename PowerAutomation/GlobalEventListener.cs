@@ -11,17 +11,22 @@ namespace PowerAutomation
     {
         private readonly IKeyboardMouseEvents hook;
 
+        public string Handle { get; internal set; } = string.Empty
+            ;
+
         public GlobalEventListener()
         {
             // Note: for the application hook, use the Hook.AppEvents() instead
-            hook = Hook.GlobalEvents();
+            //hook = Hook.GlobalEvents();
 
             hook.MouseClick += Hook_MouseClick;
         }
 
         private void Hook_MouseClick(object? sender, MouseEventArgs e)
         {
-              
+            //var s = sender as Gma.System.MouseKeyHook.Implementation.GlobalMouseListener;
+            //var args = e as Gma.System.MouseKeyHook.MouseEventExtArgs;
+
         }
 
         //public void Subscribe()

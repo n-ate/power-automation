@@ -28,38 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            CreateTaskBackButton = new Button();
-            Header = new Label();
             ManipulationTaskButton = new Button();
             DetectionTaskButton = new Button();
             NavigationTaskButton = new Button();
-            BackButton = new Controls.ImageButton();
             SuspendLayout();
-            // 
-            // CreateTaskBackButton
-            // 
-            CreateTaskBackButton.BackColor = Color.Transparent;
-            CreateTaskBackButton.FlatAppearance.BorderSize = 0;
-            CreateTaskBackButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            CreateTaskBackButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            CreateTaskBackButton.FlatStyle = FlatStyle.Flat;
-            CreateTaskBackButton.ForeColor = Color.Transparent;
-            CreateTaskBackButton.Location = new Point(3, 3);
-            CreateTaskBackButton.Name = "CreateTaskBackButton";
-            CreateTaskBackButton.Size = new Size(48, 32);
-            CreateTaskBackButton.TabIndex = 5;
-            CreateTaskBackButton.UseVisualStyleBackColor = false;
-            // 
-            // Header
-            // 
-            Header.Font = new Font("Tahoma", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            Header.Location = new Point(16, 3);
-            Header.Margin = new Padding(16, 16, 16, 8);
-            Header.Name = "Header";
-            Header.Size = new Size(168, 40);
-            Header.TabIndex = 0;
-            Header.Text = "Create Task";
-            Header.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ManipulationTaskButton
             // 
@@ -82,6 +54,7 @@
             DetectionTaskButton.TabIndex = 1;
             DetectionTaskButton.Text = "Detection Task";
             DetectionTaskButton.UseVisualStyleBackColor = true;
+            DetectionTaskButton.Click += DetectionTaskButton_Click;
             // 
             // NavigationTaskButton
             // 
@@ -94,44 +67,25 @@
             NavigationTaskButton.Text = "Navigation Task";
             NavigationTaskButton.UseVisualStyleBackColor = true;
             // 
-            // BackButton
-            // 
-            BackButton.BackColor = Color.Transparent;
-            BackButton.FlatAppearance.BorderSize = 0;
-            BackButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            BackButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            BackButton.FlatStyle = FlatStyle.Flat;
-            BackButton.Image = Properties.Images.back_arrow_32;
-            BackButton.Location = new Point(5, 5);
-            BackButton.MouseOverImage = Properties.Images.back_arrow_light_32;
-            BackButton.Name = "BackButton";
-            BackButton.Size = new Size(37, 32);
-            BackButton.TabIndex = 6;
-            BackButton.UseVisualStyleBackColor = false;
-            BackButton.Click += BackButton_Click;
-            // 
             // CreateTaskWidget
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            Controls.Add(BackButton);
-            Controls.Add(CreateTaskBackButton);
-            Controls.Add(Header);
             Controls.Add(ManipulationTaskButton);
             Controls.Add(NavigationTaskButton);
             Controls.Add(DetectionTaskButton);
             Name = "CreateTaskWidget";
             Size = new Size(200, 233);
+            Controls.SetChildIndex(DetectionTaskButton, 0);
+            Controls.SetChildIndex(NavigationTaskButton, 0);
+            Controls.SetChildIndex(ManipulationTaskButton, 0);
             ResumeLayout(false);
         }
 
         #endregion
-        private Button CreateTaskBackButton;
-        private Label Header;
         private Button ManipulationTaskButton;
         private Button DetectionTaskButton;
         private Button NavigationTaskButton;
-        private Controls.ImageButton BackButton;
     }
 }

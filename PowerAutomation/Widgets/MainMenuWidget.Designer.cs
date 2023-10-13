@@ -28,22 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Header = new Label();
             SettingsButton = new Button();
             CreateButton = new Button();
             LoadButton = new Button();
             SuspendLayout();
-            // 
-            // Header
-            // 
-            Header.Font = new Font("Tahoma", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            Header.Location = new Point(16, 3);
-            Header.Margin = new Padding(16, 16, 16, 8);
-            Header.Name = "Header";
-            Header.Size = new Size(168, 40);
-            Header.TabIndex = 0;
-            Header.Text = "Power Automation";
-            Header.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // SettingsButton
             // 
@@ -85,7 +73,6 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            Controls.Add(Header);
             Controls.Add(SettingsButton);
             Controls.Add(LoadButton);
             Controls.Add(CreateButton);
@@ -95,7 +82,6 @@
         }
 
         #endregion
-        private Label Header;
         private Button SettingsButton;
         private Button CreateButton;
         private Button LoadButton;

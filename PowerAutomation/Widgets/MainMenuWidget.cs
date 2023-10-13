@@ -1,33 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using PowerAutomation.Controls;
 
 namespace PowerAutomation
 {
-    public partial class MainMenuWidget : UserControl
+    public partial class MainMenuWidget : Widget
     {
-        public MainMenuWidget()
+        public MainMenuWidget() : base("Power Automation", null)
         {
             InitializeComponent();
-
-            this.EnableDragging(); //makes the panel behave like a draggable widget
-            this.Header.EnableDragging(this); //makes the header of the panel draggable
-        }
-
-        private void SettingsButton_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            this.SwapWidgetWith(new CreateTaskWidget(this));
+            NavigateForward(new CreateTaskWidget(this));
+        }
+
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
         }
     }
 }

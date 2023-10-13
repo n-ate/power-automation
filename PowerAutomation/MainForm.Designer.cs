@@ -34,7 +34,8 @@
             TrayIconContextMenu = new ContextMenuStrip(components);
             ExitMenuItem = new ToolStripMenuItem();
             AutoHideWidgetsMenuItem = new ToolStripMenuItem();
-            mainMenuWidget1 = new MainMenuWidget();
+            mainMenuWidget = new MainMenuWidget();
+            TopNotice = new Label();
             TrayIconContextMenu.SuspendLayout();
             SuspendLayout();
             // 
@@ -70,22 +71,37 @@
             AutoHideWidgetsMenuItem.Size = new Size(172, 22);
             AutoHideWidgetsMenuItem.Text = "Auto-hide widgets";
             // 
-            // mainMenuWidget1
+            // mainMenuWidget
             // 
-            mainMenuWidget1.BackColor = SystemColors.ActiveCaption;
-            mainMenuWidget1.Location = new Point(210, 104);
-            mainMenuWidget1.Name = "mainMenuWidget1";
-            mainMenuWidget1.Size = new Size(200, 233);
-            mainMenuWidget1.TabIndex = 1;
+            mainMenuWidget.BackColor = SystemColors.ActiveCaption;
+            mainMenuWidget.Location = new Point(343, 102);
+            mainMenuWidget.Name = "mainMenuWidget";
+            mainMenuWidget.Size = new Size(200, 233);
+            mainMenuWidget.TabIndex = 1;
+            // 
+            // TopNotice
+            // 
+            TopNotice.BackColor = Color.Transparent;
+            TopNotice.Dock = DockStyle.Top;
+            TopNotice.Enabled = false;
+            TopNotice.Font = new Font("Tahoma", 16F, FontStyle.Bold, GraphicsUnit.Point);
+            TopNotice.ForeColor = Color.DodgerBlue;
+            TopNotice.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
+            TopNotice.Location = new Point(0, 0);
+            TopNotice.Name = "TopNotice";
+            TopNotice.Size = new Size(884, 50);
+            TopNotice.TabIndex = 2;
+            TopNotice.Text = "Top Notice";
+            TopNotice.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(mainMenuWidget1);
+            ClientSize = new Size(884, 661);
+            Controls.Add(TopNotice);
+            Controls.Add(mainMenuWidget);
             Name = "MainForm";
-            Text = "Form2";
             TrayIconContextMenu.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -95,7 +111,7 @@
         private ContextMenuStrip TrayIconContextMenu;
         private ToolStripMenuItem ExitMenuItem;
         private ToolStripMenuItem AutoHideWidgetsMenuItem;
-        private MainMenuWidget createTaskWidget1;
-        private MainMenuWidget mainMenuWidget1;
+        private MainMenuWidget mainMenuWidget;
+        public Label TopNotice;
     }
 }

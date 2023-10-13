@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PowerAutomation
+﻿namespace PowerAutomation
 {
     public static class DraggableControlExtensions
     {
         // TKey is control to drag, TValue is a flag used while dragging
         private static Dictionary<Control, (bool IsDragging, Control Target)> draggable = new Dictionary<Control, (bool, Control)>();
+
         private static Point mouseOffset; //mouse location is relative to control
         private static Point targetsOffset; //targets location is relative to handle location
         private static Cursor? defaultCurrentCursor = null;
@@ -65,6 +59,7 @@ namespace PowerAutomation
                 Cursor.Current = Cursors.SizeAll;
             }
         }
+
         private static void control_MouseUp(object? sender, MouseEventArgs e)
         {
             var handle = sender as Control;
@@ -80,6 +75,7 @@ namespace PowerAutomation
                 }
             }
         }
+
         private static void control_MouseMove(object? sender, MouseEventArgs e)
         {
             var handle = sender as Control;
