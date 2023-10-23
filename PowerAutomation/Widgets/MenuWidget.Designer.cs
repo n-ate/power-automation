@@ -1,6 +1,6 @@
 ﻿namespace PowerAutomation
 {
-    partial class MainMenuWidget
+    partial class MenuWidget
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             SettingsButton = new Button();
-            CreateButton = new Button();
-            LoadButton = new Button();
+            WorkspacesButton = new Button();
+            MinimizeButton = new Button();
             SuspendLayout();
             // 
             // SettingsButton
@@ -45,45 +45,49 @@
             SettingsButton.UseVisualStyleBackColor = true;
             SettingsButton.Click += SettingsButton_Click;
             // 
-            // CreateButton
+            // WorkspacesButton
             // 
-            CreateButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            CreateButton.Location = new Point(16, 59);
-            CreateButton.Margin = new Padding(16, 8, 16, 8);
-            CreateButton.Name = "CreateButton";
-            CreateButton.Size = new Size(168, 40);
-            CreateButton.TabIndex = 1;
-            CreateButton.Text = "Create";
-            CreateButton.UseVisualStyleBackColor = true;
-            CreateButton.Click += CreateButton_Click;
+            WorkspacesButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            WorkspacesButton.Location = new Point(16, 59);
+            WorkspacesButton.Margin = new Padding(16, 8, 16, 8);
+            WorkspacesButton.Name = "WorkspacesButton";
+            WorkspacesButton.Size = new Size(168, 40);
+            WorkspacesButton.TabIndex = 1;
+            WorkspacesButton.Text = "Workspaces";
+            WorkspacesButton.UseVisualStyleBackColor = true;
+            WorkspacesButton.Click += WorkspacesButton_Click;
             // 
-            // LoadButton
+            // MinimizeButton
             // 
-            LoadButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            LoadButton.Location = new Point(16, 115);
-            LoadButton.Margin = new Padding(16, 8, 16, 8);
-            LoadButton.Name = "LoadButton";
-            LoadButton.Size = new Size(168, 40);
-            LoadButton.TabIndex = 3;
-            LoadButton.Text = "Load";
-            LoadButton.UseVisualStyleBackColor = true;
+            MinimizeButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            MinimizeButton.Location = new Point(16, 227);
+            MinimizeButton.Margin = new Padding(16, 8, 16, 8);
+            MinimizeButton.Name = "MinimizeButton";
+            MinimizeButton.Size = new Size(168, 40);
+            MinimizeButton.TabIndex = 1000;
+            MinimizeButton.Text = "Minimize";
+            MinimizeButton.UseVisualStyleBackColor = true;
+            MinimizeButton.Click += MinimizeButton_Click;
             // 
-            // MainMenuWidget
+            // MenuWidget
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
+            Controls.Add(MinimizeButton);
             Controls.Add(SettingsButton);
-            Controls.Add(LoadButton);
-            Controls.Add(CreateButton);
-            Name = "MainMenuWidget";
-            Size = new Size(200, 233);
+            Controls.Add(WorkspacesButton);
+            Name = "MenuWidget";
+            Size = new Size(200, 288);
+            Controls.SetChildIndex(WorkspacesButton, 0);
+            Controls.SetChildIndex(SettingsButton, 0);
+            Controls.SetChildIndex(MinimizeButton, 0);
             ResumeLayout(false);
         }
 
         #endregion
         private Button SettingsButton;
-        private Button CreateButton;
-        private Button LoadButton;
+        private Button WorkspacesButton;
+        private Button MinimizeButton;
     }
 }

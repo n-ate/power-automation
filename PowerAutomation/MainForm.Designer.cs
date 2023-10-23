@@ -34,8 +34,10 @@
             TrayIconContextMenu = new ContextMenuStrip(components);
             ExitMenuItem = new ToolStripMenuItem();
             AutoHideWidgetsMenuItem = new ToolStripMenuItem();
-            mainMenuWidget = new MainMenuWidget();
+            MaximizeMenuItem = new ToolStripMenuItem();
+            mainMenuWidget = new MenuWidget();
             TopNotice = new Label();
+            panel1 = new Panel();
             TrayIconContextMenu.SuspendLayout();
             SuspendLayout();
             // 
@@ -52,9 +54,9 @@
             // 
             // TrayIconContextMenu
             // 
-            TrayIconContextMenu.Items.AddRange(new ToolStripItem[] { ExitMenuItem, AutoHideWidgetsMenuItem });
+            TrayIconContextMenu.Items.AddRange(new ToolStripItem[] { ExitMenuItem, AutoHideWidgetsMenuItem, MaximizeMenuItem });
             TrayIconContextMenu.Name = "TrayIconContextMenu";
-            TrayIconContextMenu.Size = new Size(173, 48);
+            TrayIconContextMenu.Size = new Size(173, 70);
             TrayIconContextMenu.ItemClicked += TrayIconContextMenu_ItemClicked;
             // 
             // ExitMenuItem
@@ -71,34 +73,49 @@
             AutoHideWidgetsMenuItem.Size = new Size(172, 22);
             AutoHideWidgetsMenuItem.Text = "Auto-hide widgets";
             // 
+            // MaximizeMenuItem
+            // 
+            MaximizeMenuItem.Name = "MaximizeMenuItem";
+            MaximizeMenuItem.Size = new Size(172, 22);
+            MaximizeMenuItem.Text = "Maximize";
+            // 
             // mainMenuWidget
             // 
             mainMenuWidget.BackColor = SystemColors.ActiveCaption;
             mainMenuWidget.Location = new Point(343, 102);
             mainMenuWidget.Name = "mainMenuWidget";
-            mainMenuWidget.Size = new Size(200, 233);
+            mainMenuWidget.Size = new Size(200, 279);
             mainMenuWidget.TabIndex = 1;
             // 
             // TopNotice
             // 
             TopNotice.BackColor = Color.Transparent;
             TopNotice.Dock = DockStyle.Top;
-            TopNotice.Enabled = false;
-            TopNotice.Font = new Font("Tahoma", 16F, FontStyle.Bold, GraphicsUnit.Point);
-            TopNotice.ForeColor = Color.DodgerBlue;
+            TopNotice.Font = new Font("Tahoma", 28F, FontStyle.Bold, GraphicsUnit.Point);
+            TopNotice.ForeColor = Color.Firebrick;
             TopNotice.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
             TopNotice.Location = new Point(0, 0);
             TopNotice.Name = "TopNotice";
             TopNotice.Size = new Size(884, 50);
             TopNotice.TabIndex = 2;
-            TopNotice.Text = "Top Notice";
+            TopNotice.Text = "{notice}";
             TopNotice.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            panel1.Location = new Point(80, 426);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(200, 100);
+            panel1.TabIndex = 3;
+            panel1.Paint += panel1_Paint;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(884, 661);
+            Controls.Add(panel1);
             Controls.Add(TopNotice);
             Controls.Add(mainMenuWidget);
             Name = "MainForm";
@@ -111,7 +128,9 @@
         private ContextMenuStrip TrayIconContextMenu;
         private ToolStripMenuItem ExitMenuItem;
         private ToolStripMenuItem AutoHideWidgetsMenuItem;
-        private MainMenuWidget mainMenuWidget;
+        private MenuWidget mainMenuWidget;
         public Label TopNotice;
+        private ToolStripMenuItem MaximizeMenuItem;
+        private Panel panel1;
     }
 }

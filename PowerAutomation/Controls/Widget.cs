@@ -11,44 +11,67 @@
             InitializeComponent();
 
             _ = Header!.Text; //added to present as not null
-            _ = BackButton!.Text;
+            _ = BackButton!.Text; //added to present as not null
         }
 
-        public Widget(string header, Widget? caller)
+        public Widget(string headerText, Widget? caller)
         {
             InitializeComponent();
 
-            Caller = caller;
-            BackButton!.Click += (s, e) => TryNavigateBack();
+            _ = Header!.Text; //added to present as not null
 
-            this.Resize += async (s, e) => await this.EnqueUIChangeToRunAfterDelay(nameof(UpdateWidgetLayout), 180, c => UpdateWidgetLayout(header));
+            Caller = caller;
+            BackButton!.Click += (s, e) => TryNavigateBackward();
+
+            this.Resize += async (s, e) => await this.EnqueUIChangeToRunAfterDelay(nameof(UpdateWidgetLayout), 180, c => UpdateWidgetLayout(headerText));
 
             this.EnableDragging(); //makes the panel behave like a draggable widget
-            Header!.EnableDragging(this); //makes the header of the panel draggable
+            Header.EnableDragging(this); //makes the header of the panel draggable
         }
 
         public Widget? Caller { get; }
 
         public void NavigateForward(Widget widget)
         {
-            widget.Location = this.Location;
-            this.ParentForm.Controls.Add(widget);
-            this.ParentForm.Controls.Remove(this);
+            OnBeforeNavigate();
+
+            widget.Location = Location;
+            var zOrder = this.GetZOrder();
+            Parent.Controls.Add(widget);
+            Parent.Controls.Remove(this);
+            widget.SetZOrder(zOrder);
         }
 
-        public void SetNotice(string message)
+        public void Open(Widget widget, int x, int y)
         {
-            MainForm.Form.TopNotice.Text = message;
+            OnBeforeNavigate();
+
+            widget.Left = x;
+            widget.Top = y;
+            this.Parent.Controls.Add(widget);
+            widget.BringToFront();
         }
 
-        public bool TryNavigateBack()
+        public bool TryNavigateBackward()
         {
             if (Caller is null) return false;
 
-            Caller.Location = this.Location;
-            this.ParentForm.Controls.Add(Caller);
-            this.ParentForm.Controls.Remove(this);
+            OnBeforeNavigate();
+
+            Caller.Location = Location;
+            var zOrder = this.GetZOrder();
+            Parent.Controls.Add(Caller);
+            Parent.Controls.Remove(this);
+            Caller.SetZOrder(zOrder);
+
+            Caller.OnNavigationReturnedBack();
+
             return true;
+        }
+
+        public virtual void OnNavigationReturnedBack()
+        {
+
         }
 
         private void InitializeComponent()
@@ -56,9 +79,9 @@
             Header = new Label();
             BackButton = new ImageButton();
             SuspendLayout();
-            // 
+            //
             // Header
-            // 
+            //
             Header.Anchor = AnchorStyles.Top;
             Header.BackColor = Color.Transparent;
             Header.Font = new Font("Tahoma", 14F, FontStyle.Regular, GraphicsUnit.Point);
@@ -69,9 +92,9 @@
             Header.TabIndex = 1;
             Header.Text = "{header}";
             Header.TextAlign = ContentAlignment.MiddleCenter;
-            // 
+            //
             // BackButton
-            // 
+            //
             BackButton.BackColor = Color.Transparent;
             BackButton.FlatAppearance.BorderSize = 0;
             BackButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
@@ -84,9 +107,10 @@
             BackButton.Size = new Size(46, 40);
             BackButton.TabIndex = 999;
             BackButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // Widget
-            // 
+            //
+            BackColor = SystemColors.ActiveCaption;
             Controls.Add(BackButton);
             Controls.Add(Header);
             Name = "Widget";
@@ -113,6 +137,10 @@
                     BackButton.Visible = true;
                 }
             }
+        }
+
+        public virtual void OnBeforeNavigate()
+        {
         }
     }
 }

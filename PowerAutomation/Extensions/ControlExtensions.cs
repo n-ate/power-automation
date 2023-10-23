@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace PowerAutomation
 {
@@ -49,6 +50,77 @@ namespace PowerAutomation
             }
         }
 
+        /// <summary>
+        /// Flashes the control to draw attention.
+        /// </summary>
+        public static void Flash(this Control control, int flashCount = 2)
+        {
+            switch (control)
+            {
+                case Label label:
+                    FlashLabel(label, Color.Red, flashCount * 2);
+                    break;
+
+                case Button button:
+                    FlashButton(button, FlatStyle.Flat, Color.LightYellow, Color.DarkGray, flashCount * 2);
+                    break;
+
+                default: throw new NotImplementedException();
+            }
+
+            static void FlashLabel(Label label, Color foreColor, int iterations, int count = 1)
+            {
+                var xForeColor = label.ForeColor;
+
+                label.ExecuteOnUIThread(l =>
+                {
+                    l.ForeColor = foreColor;
+                });
+
+                if (count < iterations)
+                {
+                    Task.Run(async () =>
+                    {
+                        if (count % 2 == 0) await Task.Delay(300);
+                        else await Task.Delay(300);
+                        FlashLabel(label, xForeColor, iterations, count + 1);
+                    });
+                }
+            }
+
+            static void FlashButton(Button button, FlatStyle style, Color backColor, Color borderColor, int iterations, int count = 1)
+            {
+                var xBackColor = button.BackColor;
+                var xBorderColor = button.FlatAppearance.BorderColor;
+                var xStyle = button.FlatStyle;
+
+                button.ExecuteOnUIThread(b =>
+                {
+                    b.BackColor = backColor;
+                    b.FlatAppearance.BorderColor = borderColor;
+                    b.FlatStyle = style;
+                });
+
+                if (count < iterations)
+                {
+                    Task.Run(async () =>
+                    {
+                        if (count % 2 == 0) await Task.Delay(300);
+                        else await Task.Delay(50);
+                        FlashButton(button, xStyle, xBackColor, xBorderColor, iterations, count + 1);
+                    });
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the current z-order of the control amongst its siblings
+        /// </summary>
+        public static int GetZOrder(this Control control)
+        {
+            return control.Parent.Controls.GetChildIndex(control);
+        }
+
         public static bool IsChildOf(this Control child, Control parent)
         {
             while (child.Parent is not null)
@@ -62,6 +134,14 @@ namespace PowerAutomation
         public static bool IsParentOf(this Control parent, Control child)
         {
             return child.IsChildOf(parent);
+        }
+
+        /// <summary>
+        /// Gets the current z-order of the control amongst its siblings
+        /// </summary>
+        public static void SetZOrder(this Control control, int zOrder)
+        {
+            control.Parent.Controls.SetChildIndex(control, zOrder);
         }
     }
 }

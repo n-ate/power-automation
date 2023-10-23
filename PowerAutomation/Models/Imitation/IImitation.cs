@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PowerAutomation
+namespace PowerAutomation.Models.Imitation
 {
-    public static class WidgetManagement
+    public interface IImitation
     {
     }
 }
