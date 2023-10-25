@@ -37,7 +37,6 @@
             MaximizeMenuItem = new ToolStripMenuItem();
             mainMenuWidget = new MenuWidget();
             TopNotice = new Label();
-            panel1 = new Panel();
             TrayIconContextMenu.SuspendLayout();
             SuspendLayout();
             // 
@@ -89,7 +88,6 @@
             // 
             // TopNotice
             // 
-            TopNotice.BackColor = Color.Transparent;
             TopNotice.Dock = DockStyle.Top;
             TopNotice.Font = new Font("Tahoma", 28F, FontStyle.Bold, GraphicsUnit.Point);
             TopNotice.ForeColor = Color.Firebrick;
@@ -100,14 +98,8 @@
             TopNotice.TabIndex = 2;
             TopNotice.Text = "{notice}";
             TopNotice.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // panel1
-            // 
-            panel1.Location = new Point(80, 426);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(200, 100);
-            panel1.TabIndex = 3;
-            panel1.Paint += panel1_Paint;
+            TopNotice.MouseEnter += TopNotice_MouseEnter;
+            TopNotice.MouseLeave += TopNotice_MouseLeave;
             // 
             // MainForm
             // 
@@ -115,7 +107,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(884, 661);
-            Controls.Add(panel1);
             Controls.Add(TopNotice);
             Controls.Add(mainMenuWidget);
             Name = "MainForm";
@@ -131,6 +122,5 @@
         private MenuWidget mainMenuWidget;
         public Label TopNotice;
         private ToolStripMenuItem MaximizeMenuItem;
-        private Panel panel1;
     }
 }

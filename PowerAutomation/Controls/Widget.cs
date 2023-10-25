@@ -71,7 +71,6 @@
 
         public virtual void OnNavigationReturnedBack()
         {
-
         }
 
         private void InitializeComponent()

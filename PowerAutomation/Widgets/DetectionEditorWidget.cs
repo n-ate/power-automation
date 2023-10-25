@@ -1,4 +1,5 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Models;
 using PowerAutomation.Models.Detection;
 
 namespace PowerAutomation.Widgets
@@ -14,8 +15,58 @@ namespace PowerAutomation.Widgets
             UpdateFromModel(Model);
         }
 
+        public ImageDetection Model { get; }
+
+        public Bounds SelectionLocation { get; private set; }
+
+        public override void OnBeforeNavigate()
+        {
+            UpdateModel(Model);
+            App.SaveCurrentState();
+            base.OnBeforeNavigate();
+        }
+
+        public override void OnNavigationReturnedBack()
+        {
+            base.OnNavigationReturnedBack();
+            UpdateFromModel(Model); //model may have changed while away
+        }
+
+        private void MatchPercentTrackbar_Scroll(object sender, EventArgs e)
+        {
+            MatchPercentLabel.Text = $"{MatchPercentTrackbar.Value}%";
+        }
+
+        private async void SelectImageButton_Click(object sender, EventArgs e)
+        {
+            Hide();
+            var selection = await App.UserImageSelect();
+            SelectedImage.Image = selection.Image;
+            SelectionLocation = new Bounds()
+            {
+                Top = selection.Bounds.Top,
+                Left = selection.Bounds.Left,
+                Height = selection.Bounds.Height,
+                Width = selection.Bounds.Width
+            };
+            LocationLabel.Text = $"top:{SelectionLocation.Top}, left:{SelectionLocation.Left}, h:{SelectionLocation.Height}, w:{SelectionLocation.Width}";
+            Show();
+        }
+
+        private void TitleTextbox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (KeyTextbox.Text == autoKey) //user has not changed the key
+            {
+                autoKey = KeyTextbox.Text = TitleTextbox.Text.Replace(" ", "");
+                UpdateModel(Model);
+            }
+        }
+
         private void UpdateFromModel(ImageDetection model)
         {
+            SelectedImage.Image = Model.MatchImage;
+            SelectionLocation = model.Location;
+            LocationLabel.Text = $"top:{SelectionLocation.Top}, left:{SelectionLocation.Left}, h:{SelectionLocation.Height}, w:{SelectionLocation.Width}";
             TitleTextbox.Text = model.Title;
             KeyTextbox.Text = model.Key;
             DescriptionTextbox.Text = model.Description;
@@ -34,6 +85,8 @@ namespace PowerAutomation.Widgets
 
         private void UpdateModel(ImageDetection model)
         {
+            Model.MatchImage = (SelectedImage.Image as Bitmap)!;
+            Model.Location = SelectionLocation;
             model.Key = KeyTextbox.Text;
             model.Title = TitleTextbox.Text;
             Model.Description = DescriptionTextbox.Text;
@@ -41,48 +94,6 @@ namespace PowerAutomation.Widgets
             Model.MatchTolerance = ToleranceTrackbar.Value;
             Model.MatchAttempts = (int)RetriesNumeric.Value;
             Model.MatchAttemptDelayMS = (int)MSRetryWaitNumeric.Value;
-        }
-
-        public ImageDetection Model { get; }
-
-        private void TitleTextbox_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (KeyTextbox.Text == autoKey) //user has not changed the key
-            {
-                autoKey = KeyTextbox.Text = TitleTextbox.Text.Replace(" ", "");
-                UpdateModel(Model);
-            }
-        }
-
-        private async void SelectImageButton_Click(object sender, EventArgs e)
-        {
-            Hide();
-            var selection = await App.UserImageSelect();
-            SelectedImage.Image = Model.MatchImage = selection.Image;
-            Model.Location.Top = selection.Bounds.Top;
-            Model.Location.Left = selection.Bounds.Left;
-            Model.Location.Height = selection.Bounds.Height;
-            Model.Location.Width = selection.Bounds.Width;
-            LocationLabel.Text = $"top:{Model.Location.Top}, left:{Model.Location.Left}, h:{Model.Location.Height}, w:{Model.Location.Width}";
-            Show();
-        }
-
-        private void MatchPercentTrackbar_Scroll(object sender, EventArgs e)
-        {
-            MatchPercentLabel.Text = $"{MatchPercentTrackbar.Value}%";
-        }
-
-        public override void OnBeforeNavigate()
-        {
-            UpdateModel(Model);
-            App.SaveCurrentState();
-            base.OnBeforeNavigate();
-        }
-
-        public override void OnNavigationReturnedBack()
-        {
-            base.OnNavigationReturnedBack();
-            UpdateFromModel(Model); //model may have changed while away
         }
     }
 }

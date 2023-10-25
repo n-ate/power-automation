@@ -15,6 +15,7 @@ namespace PowerAutomation.Widgets
 
         private void UpdateFromModel(Workspace model)
         {
+            DetectionsListview.Items.Clear();
             DetectionsListview.SmallImageList = new ImageList();
             foreach (var detection in model.Detections.OrderBy(d => d.Title))
             {

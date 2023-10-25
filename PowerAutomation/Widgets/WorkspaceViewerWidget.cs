@@ -6,6 +6,7 @@ namespace PowerAutomation.Widgets
     public partial class WorkspaceViewerWidget : Widget
     {
         private Workspace Model;
+
         public WorkspaceViewerWidget(Widget caller, Workspace model) : base("Workspace", caller)
         {
             Model = model;
@@ -36,7 +37,6 @@ namespace PowerAutomation.Widgets
 
         private void ProceduresButton_Click(object sender, EventArgs e)
         {
-
         }
 
         public override void OnNavigationReturnedBack()

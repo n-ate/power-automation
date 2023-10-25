@@ -137,6 +137,7 @@ namespace PowerAutomation
 
                 App.Form.MouseDown += (object? s, MouseEventArgs e) =>
                 {
+                    App.SetNotice("");
                     dragStart = dragCurrent = e.Location;
                     SetSelectionTool();
                     selectionTool.Show();
