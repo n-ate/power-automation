@@ -1,7 +1,10 @@
 ﻿using PowerAutomation.Models;
 using System.Drawing.Imaging;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Vanara.PInvoke;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace PowerAutomation
 {
@@ -44,16 +47,6 @@ namespace PowerAutomation
             }
         }
 
-        public static Bitmap CaptureImage(RECT bounds)
-        {
-            var snippet = new Bitmap(bounds.Right - bounds.Left, bounds.Bottom - bounds.Top, PixelFormat.Format32bppArgb);
-            using (var graphics = Graphics.FromImage(snippet))
-            {
-                graphics.CopyFromScreen(bounds.Left, bounds.Top, 0, 0, snippet.Size, CopyPixelOperation.SourceCopy);
-            }
-            return snippet;
-        }
-
         public static void Initialize(MainForm form)
         {
             _form = form;
@@ -88,84 +81,43 @@ namespace PowerAutomation
             });
         }
 
-        public static async Task<(Bitmap Image, Rectangle Bounds)> UserImageSelect()
+        public static Panel AddImageWithMaskedBackground(Bitmap image)
         {
-            Bitmap? selection = null;
-            Rectangle? bounds = null;
-
-            App.SetNotice("Click and drag to selet area to match.");
-
-            using (var screen = App.CaptureImage(App.Form.Bounds))
+            var control = new Panel()
             {
-                Directory.CreateDirectory("C:\\_\\temp\\");
-                screen.Save("C:\\_\\temp\\screen.png", ImageFormat.Png);
-                //TODO: try to keep image in memory
-                App.Form.ExecuteOnUIThread(f => f.BackgroundImage = Image.FromFile("C:\\_\\temp\\screen.png"));// screen);
-                var selectionTool = new Panel()
-                {
-                    AutoSize = false,
-                    Visible = false
-                };
-                selectionTool.Paint += (s, e) =>
-                {
-                    e.Graphics.DrawRectangle(new Pen(Color.Red, 2f), 1, 1, selectionTool.Width - 2, selectionTool.Height - 2);
-                };
-                App.Form.Controls.Add(selectionTool);
-                //selectionTool.SetZOrder(1000);
+                Top = 0,
+                Left = 0,
+                Height = image.Height,
+                Width = image.Width,
+                BackgroundImage = image,
+                Tag = nameof(AddImageWithMaskedBackground)
+            };
+            if (Form.Width > control.Width) control.Left = (Form.Width - control.Width) / 2;
+            if (Form.Height > control.Height) control.Top = (Form.Height - control.Height) / 2;
+            Form.Controls.Add(control);
+            control.SendToBack();
+            Form.BackColor = Color.DarkGray;
+            return control;
+        }
 
-                var dragStart = Point.Empty;
-                var dragCurrent = Point.Empty;
+        public static void Hide()
+        {
+            Form.WindowState = FormWindowState.Minimized;
+        }
 
-                Rectangle GetSelectionBounds()
-                {
-                    var x = Math.Min(dragStart.X, dragCurrent.X);
-                    var y = Math.Min(dragStart.Y, dragCurrent.Y);
-                    var w = Math.Max(dragStart.X, dragCurrent.X) - x;
-                    var h = Math.Max(dragStart.Y, dragCurrent.Y) - y;
-                    return new Rectangle() { X = x, Y = y, Width = w, Height = h };
-                }
+        public static void Show()
+        {
+            Form.WindowState = FormWindowState.Maximized;
+        }
 
-                void SetSelectionTool()
-                {
-                    var bounds = GetSelectionBounds();
-                    selectionTool.Top = bounds.Y - 2;
-                    selectionTool.Left = bounds.X - 2;
-                    selectionTool.Height = bounds.Height + 4;
-                    selectionTool.Width = bounds.Width + 4;
-                    selectionTool.Invalidate();
-                }
-
-                App.Form.MouseDown += (object? s, MouseEventArgs e) =>
-                {
-                    App.SetNotice("");
-                    dragStart = dragCurrent = e.Location;
-                    SetSelectionTool();
-                    selectionTool.Show();
-                };
-                App.Form.MouseMove += (object? s, MouseEventArgs e) =>
-                {
-                    dragCurrent = e.Location;
-                    SetSelectionTool();
-                };
-                App.Form.MouseUp += (object? s, MouseEventArgs e) =>
-                {
-                    dragCurrent = e.Location;
-                    bounds = GetSelectionBounds();
-                    selection = App.CaptureImage(bounds.Value);
-                    Directory.CreateDirectory("C:\\_\\temp\\");
-                    selection.Save("C:\\_\\temp\\selection.png", ImageFormat.Png);
-                    App.Form.Controls.Remove(selectionTool);
-                };
+        public static void RemoveImageWithMaskedBackground()
+        {
+            var toRemove = new List<Control>();
+            foreach(Control control in Form.Controls)
+            {
+                if(control.Tag.ToString() == nameof(RemoveImageWithMaskedBackground)) toRemove.Add(control);
             }
-
-            while (bounds is null || selection is null) await Task.Delay(50);
-
-            var image = App.Form.BackgroundImage;
-            App.Form.BackgroundImage = null;
-            image.Dispose();
-
-            App.SetNotice("");
-            return (selection, bounds.Value);
+            foreach (var control in toRemove) Form.Controls.Remove(control);
         }
     }
 }

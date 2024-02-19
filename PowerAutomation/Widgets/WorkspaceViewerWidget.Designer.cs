@@ -29,16 +29,20 @@
         private void InitializeComponent()
         {
             TitleLabel = new Label();
-            TitlebarLabel = new Label();
+            ProcessNameLabel = new Label();
             IconImage = new PictureBox();
             ClassLabel = new Label();
             DescriptionLabel = new Label();
             DescriptionValueLabel = new Label();
-            TitlebarValueLabel = new Label();
+            ProcessNameValueLabel = new Label();
             ClassValueLabel = new Label();
             EditButton = new Button();
             DetectionsButton = new Button();
             ProceduresButton = new Button();
+            AppTypeValueLabel = new Label();
+            AppTypeLabel = new Label();
+            ModuleNameValueLabel = new Label();
+            ModuleNameLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)IconImage).BeginInit();
             SuspendLayout();
             // 
@@ -48,20 +52,20 @@
             TitleLabel.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
             TitleLabel.Location = new Point(57, 52);
             TitleLabel.Name = "TitleLabel";
-            TitleLabel.Size = new Size(54, 27);
+            TitleLabel.Size = new Size(70, 27);
             TitleLabel.TabIndex = 1013;
-            TitleLabel.Text = "Title";
+            TitleLabel.Text = "{title}";
             // 
-            // TitlebarLabel
+            // ProcessNameLabel
             // 
-            TitlebarLabel.AutoSize = true;
-            TitlebarLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            TitlebarLabel.ForeColor = Color.FromArgb(64, 64, 64);
-            TitlebarLabel.Location = new Point(13, 91);
-            TitlebarLabel.Name = "TitlebarLabel";
-            TitlebarLabel.Size = new Size(52, 17);
-            TitlebarLabel.TabIndex = 1020;
-            TitlebarLabel.Text = "Titlebar";
+            ProcessNameLabel.AutoSize = true;
+            ProcessNameLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ProcessNameLabel.ForeColor = Color.FromArgb(64, 64, 64);
+            ProcessNameLabel.Location = new Point(14, 124);
+            ProcessNameLabel.Name = "ProcessNameLabel";
+            ProcessNameLabel.Size = new Size(55, 17);
+            ProcessNameLabel.TabIndex = 1020;
+            ProcessNameLabel.Text = "Process";
             // 
             // IconImage
             // 
@@ -76,7 +80,7 @@
             ClassLabel.AutoSize = true;
             ClassLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
             ClassLabel.ForeColor = Color.FromArgb(64, 64, 64);
-            ClassLabel.Location = new Point(13, 117);
+            ClassLabel.Location = new Point(14, 185);
             ClassLabel.Margin = new Padding(5, 0, 5, 0);
             ClassLabel.Name = "ClassLabel";
             ClassLabel.Size = new Size(38, 17);
@@ -88,7 +92,7 @@
             DescriptionLabel.AutoSize = true;
             DescriptionLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
             DescriptionLabel.ForeColor = Color.FromArgb(64, 64, 64);
-            DescriptionLabel.Location = new Point(13, 144);
+            DescriptionLabel.Location = new Point(14, 212);
             DescriptionLabel.Margin = new Padding(5, 0, 5, 0);
             DescriptionLabel.Name = "DescriptionLabel";
             DescriptionLabel.Size = new Size(76, 17);
@@ -99,30 +103,30 @@
             // 
             DescriptionValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
             DescriptionValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
-            DescriptionValueLabel.Location = new Point(93, 144);
+            DescriptionValueLabel.Location = new Point(94, 212);
             DescriptionValueLabel.Margin = new Padding(5, 0, 5, 0);
             DescriptionValueLabel.Name = "DescriptionValueLabel";
             DescriptionValueLabel.Size = new Size(238, 112);
             DescriptionValueLabel.TabIndex = 1024;
             DescriptionValueLabel.Text = "{description}";
             // 
-            // TitlebarValueLabel
+            // ProcessNameValueLabel
             // 
-            TitlebarValueLabel.AutoSize = true;
-            TitlebarValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            TitlebarValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
-            TitlebarValueLabel.Location = new Point(93, 91);
-            TitlebarValueLabel.Name = "TitlebarValueLabel";
-            TitlebarValueLabel.Size = new Size(63, 17);
-            TitlebarValueLabel.TabIndex = 1023;
-            TitlebarValueLabel.Text = "{titlebar}";
+            ProcessNameValueLabel.AutoSize = true;
+            ProcessNameValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ProcessNameValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
+            ProcessNameValueLabel.Location = new Point(94, 124);
+            ProcessNameValueLabel.Name = "ProcessNameValueLabel";
+            ProcessNameValueLabel.Size = new Size(69, 17);
+            ProcessNameValueLabel.TabIndex = 1023;
+            ProcessNameValueLabel.Text = "{process}";
             // 
             // ClassValueLabel
             // 
             ClassValueLabel.AutoSize = true;
             ClassValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
             ClassValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
-            ClassValueLabel.Location = new Point(93, 117);
+            ClassValueLabel.Location = new Point(94, 185);
             ClassValueLabel.Margin = new Padding(5, 0, 5, 0);
             ClassValueLabel.Name = "ClassValueLabel";
             ClassValueLabel.Size = new Size(50, 17);
@@ -134,7 +138,7 @@
             EditButton.BackColor = SystemColors.ButtonFace;
             EditButton.FlatStyle = FlatStyle.Flat;
             EditButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            EditButton.Location = new Point(13, 284);
+            EditButton.Location = new Point(14, 352);
             EditButton.Name = "EditButton";
             EditButton.Size = new Size(100, 32);
             EditButton.TabIndex = 1025;
@@ -147,7 +151,7 @@
             DetectionsButton.BackColor = SystemColors.ButtonFace;
             DetectionsButton.FlatStyle = FlatStyle.Flat;
             DetectionsButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            DetectionsButton.Location = new Point(125, 284);
+            DetectionsButton.Location = new Point(126, 352);
             DetectionsButton.Name = "DetectionsButton";
             DetectionsButton.Size = new Size(100, 32);
             DetectionsButton.TabIndex = 1026;
@@ -160,7 +164,7 @@
             ProceduresButton.BackColor = SystemColors.ButtonFace;
             ProceduresButton.FlatStyle = FlatStyle.Flat;
             ProceduresButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            ProceduresButton.Location = new Point(237, 284);
+            ProceduresButton.Location = new Point(238, 352);
             ProceduresButton.Name = "ProceduresButton";
             ProceduresButton.Size = new Size(100, 32);
             ProceduresButton.TabIndex = 1027;
@@ -168,34 +172,86 @@
             ProceduresButton.UseVisualStyleBackColor = false;
             ProceduresButton.Click += ProceduresButton_Click;
             // 
+            // AppTypeValueLabel
+            // 
+            AppTypeValueLabel.AutoSize = true;
+            AppTypeValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            AppTypeValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
+            AppTypeValueLabel.Location = new Point(94, 95);
+            AppTypeValueLabel.Name = "AppTypeValueLabel";
+            AppTypeValueLabel.Size = new Size(78, 17);
+            AppTypeValueLabel.TabIndex = 1029;
+            AppTypeValueLabel.Text = "{app-type}";
+            // 
+            // AppTypeLabel
+            // 
+            AppTypeLabel.AutoSize = true;
+            AppTypeLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            AppTypeLabel.ForeColor = Color.FromArgb(64, 64, 64);
+            AppTypeLabel.Location = new Point(14, 95);
+            AppTypeLabel.Name = "AppTypeLabel";
+            AppTypeLabel.Size = new Size(67, 17);
+            AppTypeLabel.TabIndex = 1028;
+            AppTypeLabel.Text = "App Type";
+            // 
+            // ModuleNameValueLabel
+            // 
+            ModuleNameValueLabel.AutoSize = true;
+            ModuleNameValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ModuleNameValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
+            ModuleNameValueLabel.Location = new Point(94, 155);
+            ModuleNameValueLabel.Name = "ModuleNameValueLabel";
+            ModuleNameValueLabel.Size = new Size(67, 17);
+            ModuleNameValueLabel.TabIndex = 1031;
+            ModuleNameValueLabel.Text = "{module}";
+            // 
+            // ModuleNameLabel
+            // 
+            ModuleNameLabel.AutoSize = true;
+            ModuleNameLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ModuleNameLabel.ForeColor = Color.FromArgb(64, 64, 64);
+            ModuleNameLabel.Location = new Point(14, 155);
+            ModuleNameLabel.Name = "ModuleNameLabel";
+            ModuleNameLabel.Size = new Size(51, 17);
+            ModuleNameLabel.TabIndex = 1030;
+            ModuleNameLabel.Text = "Module";
+            // 
             // WorkspaceViewerWidget
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(ModuleNameValueLabel);
+            Controls.Add(ModuleNameLabel);
+            Controls.Add(AppTypeValueLabel);
+            Controls.Add(AppTypeLabel);
             Controls.Add(ProceduresButton);
             Controls.Add(DetectionsButton);
             Controls.Add(EditButton);
             Controls.Add(DescriptionValueLabel);
-            Controls.Add(TitlebarValueLabel);
+            Controls.Add(ProcessNameValueLabel);
             Controls.Add(ClassValueLabel);
             Controls.Add(DescriptionLabel);
-            Controls.Add(TitlebarLabel);
+            Controls.Add(ProcessNameLabel);
             Controls.Add(ClassLabel);
             Controls.Add(IconImage);
             Controls.Add(TitleLabel);
             Name = "WorkspaceViewerWidget";
-            Size = new Size(350, 331);
+            Size = new Size(350, 400);
             Controls.SetChildIndex(TitleLabel, 0);
             Controls.SetChildIndex(IconImage, 0);
             Controls.SetChildIndex(ClassLabel, 0);
-            Controls.SetChildIndex(TitlebarLabel, 0);
+            Controls.SetChildIndex(ProcessNameLabel, 0);
             Controls.SetChildIndex(DescriptionLabel, 0);
             Controls.SetChildIndex(ClassValueLabel, 0);
-            Controls.SetChildIndex(TitlebarValueLabel, 0);
+            Controls.SetChildIndex(ProcessNameValueLabel, 0);
             Controls.SetChildIndex(DescriptionValueLabel, 0);
             Controls.SetChildIndex(EditButton, 0);
             Controls.SetChildIndex(DetectionsButton, 0);
             Controls.SetChildIndex(ProceduresButton, 0);
+            Controls.SetChildIndex(AppTypeLabel, 0);
+            Controls.SetChildIndex(AppTypeValueLabel, 0);
+            Controls.SetChildIndex(ModuleNameLabel, 0);
+            Controls.SetChildIndex(ModuleNameValueLabel, 0);
             ((System.ComponentModel.ISupportInitialize)IconImage).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -203,15 +259,19 @@
 
         #endregion
         private Label TitleLabel;
-        private Label TitlebarLabel;
+        private Label ProcessNameLabel;
         private PictureBox IconImage;
         private Label ClassLabel;
         private Label DescriptionLabel;
         private Label DescriptionValueLabel;
-        private Label TitlebarValueLabel;
+        private Label ProcessNameValueLabel;
         private Label ClassValueLabel;
         private Button EditButton;
         private Button DetectionsButton;
         private Button ProceduresButton;
+        private Label AppTypeValueLabel;
+        private Label AppTypeLabel;
+        private Label ModuleNameValueLabel;
+        private Label ModuleNameLabel;
     }
 }

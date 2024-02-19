@@ -1,6 +1,6 @@
-﻿namespace PowerAutomation.Widgets
+﻿namespace PowerAutomation.Widgets.Procedures
 {
-    partial class ImageAnnotationWidget
+    partial class ActionProcedureEditorWidget
     {
         /// <summary> 
         /// Required designer variable.

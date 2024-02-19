@@ -13,6 +13,7 @@ namespace PowerAutomation.Widgets
 
         private void UpdateFromModel(Workspace[] model)
         {
+            WorkspacesListview.Items.Clear();
             WorkspacesListview.SmallImageList = new ImageList();
             foreach (var workspace in App.Workspaces.OrderBy(d => d.Title))
             {
@@ -23,7 +24,7 @@ namespace PowerAutomation.Widgets
                 item.Name = workspace.Title;
                 item.ImageKey = workspace.Title;
                 WorkspacesListview.Items.Add(item);
-                item.SubItems.Add(workspace.Application.Titlebar);
+                item.SubItems.Add(workspace.Application.ProcessName);
             }
         }
 

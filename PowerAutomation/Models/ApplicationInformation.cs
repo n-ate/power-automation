@@ -38,6 +38,12 @@ namespace PowerAutomation.Models
         }
 
         [Required]
-        public string Titlebar { get; set; } = string.Empty;
+        public string ProcessName { get; set; } = string.Empty;
+
+        [Required]
+        public string ModuleName { get; set; } = string.Empty;
+
+        [Required]
+        public bool IsWinStoreApp { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using PowerAutomation.Controls;
 using PowerAutomation.Models;
+using PowerAutomation.Widgets.Procedures;
 
 namespace PowerAutomation.Widgets
 {
@@ -17,9 +18,11 @@ namespace PowerAutomation.Widgets
         private void UpdateFromModel(Workspace model)
         {
             IconImage.Image = model.Application.Icon;
-            ClassValueLabel.Text = model.Application.Class;
-            TitlebarValueLabel.Text = model.Application.Titlebar;
             TitleLabel.Text = model.Title;
+            AppTypeValueLabel.Text = model.Application.IsWinStoreApp ? "Windows Store" : "Default";
+            ProcessNameValueLabel.Text = model.Application.ProcessName;
+            ModuleNameValueLabel.Text = model.Application.ModuleName;
+            ClassValueLabel.Text = model.Application.Class;
             DescriptionValueLabel.Text = model.Description;
         }
 
@@ -37,6 +40,8 @@ namespace PowerAutomation.Widgets
 
         private void ProceduresButton_Click(object sender, EventArgs e)
         {
+            var widget = new ProceduresWidget(this, Model);
+            NavigateForward(widget);
         }
 
         public override void OnNavigationReturnedBack()

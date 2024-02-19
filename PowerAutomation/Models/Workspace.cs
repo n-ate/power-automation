@@ -17,7 +17,7 @@ namespace PowerAutomation.Models
         public ImageDetection[] Detections { get; set; } = new ImageDetection[0];
 
         [Required]
-        public Procedure[] Procedures { get; set; } = new Procedure[0];
+        public IProcedure[] Procedures { get; set; } = new IProcedure[0];
 
         [Required]
         public string Title { get; set; } = string.Empty;

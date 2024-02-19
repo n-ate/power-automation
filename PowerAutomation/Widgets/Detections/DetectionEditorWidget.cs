@@ -1,6 +1,8 @@
 ﻿using PowerAutomation.Controls;
 using PowerAutomation.Models;
 using PowerAutomation.Models.Detection;
+using System.Reflection;
+using Vanara.PInvoke;
 
 namespace PowerAutomation.Widgets
 {
@@ -8,13 +10,15 @@ namespace PowerAutomation.Widgets
     {
         private string autoKey = string.Empty;
 
-        public DetectionEditorWidget(Widget caller, ImageDetection model) : base("Detection Task", caller)
+        public DetectionEditorWidget(Widget caller, ApplicationInformation appInfo, ImageDetection model) : base("Detection Task", caller)
         {
+            AppInfo = appInfo;
             Model = model;
             InitializeComponent();
             UpdateFromModel(Model);
         }
 
+        public ApplicationInformation AppInfo { get; }
         public ImageDetection Model { get; }
 
         public Bounds SelectionLocation { get; private set; }
@@ -39,18 +43,16 @@ namespace PowerAutomation.Widgets
 
         private async void SelectImageButton_Click(object sender, EventArgs e)
         {
-            Hide();
-            var selection = await App.UserImageSelect();
-            SelectedImage.Image = selection.Image;
-            SelectionLocation = new Bounds()
+            var handle = await WinOS.FindBestHwndMatch(AppInfo);
+            if (handle == HWND.NULL)
             {
-                Top = selection.Bounds.Top,
-                Left = selection.Bounds.Left,
-                Height = selection.Bounds.Height,
-                Width = selection.Bounds.Width
-            };
-            LocationLabel.Text = $"top:{SelectionLocation.Top}, left:{SelectionLocation.Left}, h:{SelectionLocation.Height}, w:{SelectionLocation.Width}";
-            Show();
+                App.SetNotice("Could not find the application window. Is the application running?");
+            }
+            else
+            {
+                var widget = new ImageToolsWidget(this, handle, Model);
+                NavigateForward(widget);
+            }
         }
 
         private void TitleTextbox_KeyUp(object sender, KeyEventArgs e)

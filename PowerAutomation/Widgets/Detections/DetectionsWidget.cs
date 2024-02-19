@@ -42,7 +42,7 @@ namespace PowerAutomation.Widgets
                 detection = new ImageDetection();
                 Model.Detections = Model.Detections.Concat(new[] { detection }).OrderBy(d => d.Key).ToArray();
             }
-            var widget = new DetectionEditorWidget(this, detection);
+            var widget = new DetectionEditorWidget(this, Model.Application, detection);
             NavigateForward(widget);
         }
 
@@ -51,7 +51,7 @@ namespace PowerAutomation.Widgets
             var detection = DetectionsListview.FocusedItem?.Tag as ImageDetection;
             if (detection is not null)
             {
-                var widget = new DetectionEditorWidget(this, detection);
+                var widget = new DetectionEditorWidget(this, Model.Application, detection);
                 NavigateForward(widget);
             }
         }

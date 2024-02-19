@@ -63,6 +63,16 @@ namespace PowerAutomation.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap action_32 {
+            get {
+                object obj = ResourceManager.GetObject("action_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap back_arrow_32 {
             get {
                 object obj = ResourceManager.GetObject("back_arrow_32", resourceCulture);
@@ -76,6 +86,36 @@ namespace PowerAutomation.Properties {
         internal static System.Drawing.Bitmap back_arrow_light_32 {
             get {
                 object obj = ResourceManager.GetObject("back_arrow_light_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap composite_32 {
+            get {
+                object obj = ResourceManager.GetObject("composite_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap refresh_picture_64 {
+            get {
+                object obj = ResourceManager.GetObject("refresh_picture_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap snippet_select_64 {
+            get {
+                object obj = ResourceManager.GetObject("snippet_select_64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

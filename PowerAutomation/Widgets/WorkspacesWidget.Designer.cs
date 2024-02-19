@@ -31,7 +31,7 @@
             CreateDetectionButton = new Button();
             WorkspacesListview = new ListView();
             TitleColumnHeader = new ColumnHeader();
-            TitlebarColumnDescription = new ColumnHeader();
+            ProcessNameColumnDescription = new ColumnHeader();
             SuspendLayout();
             // 
             // CreateDetectionButton
@@ -49,7 +49,7 @@
             // 
             // WorkspacesListview
             // 
-            WorkspacesListview.Columns.AddRange(new ColumnHeader[] { TitleColumnHeader, TitlebarColumnDescription });
+            WorkspacesListview.Columns.AddRange(new ColumnHeader[] { TitleColumnHeader, ProcessNameColumnDescription });
             WorkspacesListview.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
             WorkspacesListview.Location = new Point(15, 90);
             WorkspacesListview.Name = "WorkspacesListview";
@@ -64,10 +64,10 @@
             TitleColumnHeader.Text = "Title";
             TitleColumnHeader.Width = 200;
             // 
-            // TitlebarColumnDescription
+            // ProcessNameColumnDescription
             // 
-            TitlebarColumnDescription.Text = "Titlebar";
-            TitlebarColumnDescription.Width = 200;
+            ProcessNameColumnDescription.Text = "Process";
+            ProcessNameColumnDescription.Width = 200;
             // 
             // WorkspacesWidget
             // 
@@ -86,6 +86,6 @@
         private Button CreateDetectionButton;
         private ListView WorkspacesListview;
         private ColumnHeader TitleColumnHeader;
-        private ColumnHeader TitlebarColumnDescription;
+        private ColumnHeader ProcessNameColumnDescription;
     }
 }

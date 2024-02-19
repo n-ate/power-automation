@@ -26,6 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Widgets\Procedures\ProceduresWidget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Widgets\WorkspacesWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -7,7 +7,7 @@ namespace PowerAutomation.Models
     /// </summary>
     public class Procedure : IProcedure
     {
-        private IProcedure[] _actions = new IProcedure[0];
+        private IProcedure[] _procedures = new IProcedure[0];
         public string Description { get; set; } = string.Empty;
 
         [Required]
@@ -16,11 +16,11 @@ namespace PowerAutomation.Models
         [Required]
         public IProcedure[] Procedures
         {
-            get { return _actions; }
+            get { return _procedures; }
             set
             {
                 ThrowIfCircularReference(value);
-                _actions = value;
+                _procedures = value;
             }
         }
 
