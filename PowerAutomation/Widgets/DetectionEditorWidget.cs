@@ -72,11 +72,11 @@ namespace PowerAutomation.Widgets
             MatchPercentLabel.Text = $"{MatchPercentTrackbar.Value}%";
         }
 
-        public override void OnBeforeNavigate()
+        public override void OnBeforeNavigate(Widget destination)
         {
             UpdateModel(Model);
             App.SaveCurrentState();
-            base.OnBeforeNavigate();
+            base.OnBeforeNavigate(destination);
         }
 
         public override void OnNavigationReturnedBack()

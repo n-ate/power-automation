@@ -5,7 +5,7 @@
         private ImageButton BackButton;
         private Label Header;
 
-        [Obsolete]
+        [Obsolete("Used at design-time only.")]
         public Widget()
         {
             InitializeComponent();
@@ -33,7 +33,7 @@
 
         public void NavigateForward(Widget widget)
         {
-            OnBeforeNavigate();
+            OnBeforeNavigate(widget);
 
             widget.Location = Location;
             var zOrder = this.GetZOrder();
@@ -44,7 +44,7 @@
 
         public void Open(Widget widget, int x, int y)
         {
-            OnBeforeNavigate();
+            OnBeforeNavigate(widget);
 
             widget.Left = x;
             widget.Top = y;
@@ -56,7 +56,7 @@
         {
             if (Caller is null) return false;
 
-            OnBeforeNavigate();
+            OnBeforeNavigate(Caller);
 
             Caller.Location = Location;
             var zOrder = this.GetZOrder();
@@ -139,7 +139,7 @@
             }
         }
 
-        public virtual void OnBeforeNavigate()
+        public virtual void OnBeforeNavigate(Widget destination)
         {
         }
     }
