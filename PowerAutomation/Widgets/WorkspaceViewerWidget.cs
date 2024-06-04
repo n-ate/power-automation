@@ -51,9 +51,9 @@ namespace PowerAutomation.Widgets
             UpdateFromModel(Model);
         }
 
-        public override void OnBeforeNavigate()
+        public override void OnBeforeNavigate(Widget destination)
         {
-            base.OnBeforeNavigate();
+            base.OnBeforeNavigate(destination);
         }
     }
 }

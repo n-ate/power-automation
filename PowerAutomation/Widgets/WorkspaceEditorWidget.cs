@@ -14,7 +14,7 @@ namespace PowerAutomation.Widgets
             UpdateFromModel(Model);
         }
 
-        public override void OnBeforeNavigate()
+        public override void OnBeforeNavigate(Widget destination)
         {
             if (string.IsNullOrEmpty(TitleTextbox.Text))
             {
@@ -24,7 +24,7 @@ namespace PowerAutomation.Widgets
             UpdateModel(Model);
             App.SaveCurrentState();
 
-            base.OnBeforeNavigate();
+            base.OnBeforeNavigate(destination);
         }
 
         public override void OnNavigationReturnedBack()
