@@ -188,7 +188,7 @@
 
         #endregion
 
-        private TextBox ApplicationInfoTextbox;
+        //private TextBox ApplicationInfoTextbox;
         private Button SelectApplicationButton;
         private TextBox TitleTextbox;
         private Label TitleLabel;

@@ -49,9 +49,8 @@ namespace PowerAutomation.Widgets
             }
         }
 
-        public override void OnBeforeNavigate(Widget destination)
+        public void OnBeforeNavigate(Widget destination)
         {
-            base.OnBeforeNavigate(destination);
         }
 
         public override void OnNavigationReturnedBack()

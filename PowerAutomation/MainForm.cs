@@ -17,8 +17,8 @@ namespace PowerAutomation
             //ControlBox = false; //removes maximize, minimize, and close buttons from titlebar
             FormBorderStyle = FormBorderStyle.None; //removes window chrome
 
-            Resize += async (s, e) => await this.EnqueUIChangeToRunAfterDelay("MainForm.Init", 500, c => { mainMenuWidget.Show(); mainMenuWidget.Invalidate(); mainMenuWidget.Update(); });
-            Paint += async (s, e) => await this.EnqueUIChangeToRunAfterDelay("MainForm.Init", 500, c => { mainMenuWidget.Show(); mainMenuWidget.Invalidate(); mainMenuWidget.Update(); });
+            Resize += async (s, e) => await this.EnqueueUIChangeToRunAfterDelay("MainForm.Init", 500, c => { mainMenuWidget.Show(); mainMenuWidget.Invalidate(); mainMenuWidget.Update(); });
+            Paint += async (s, e) => await this.EnqueueUIChangeToRunAfterDelay("MainForm.Init", 500, c => { mainMenuWidget.Show(); mainMenuWidget.Invalidate(); mainMenuWidget.Update(); });
 
             TopNotice.Text = "";
 

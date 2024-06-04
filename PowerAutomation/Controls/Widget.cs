@@ -1,6 +1,8 @@
-﻿namespace PowerAutomation.Controls
+﻿using PowerAutomation.Interfaces;
+
+namespace PowerAutomation.Controls
 {
-    public class Widget : UserControl
+    public class Widget : UserControl, IViewWidget
     {
         private ImageButton BackButton;
         private Label Header;
@@ -23,10 +25,15 @@
             Caller = caller;
             BackButton!.Click += (s, e) => TryNavigateBackward();
 
-            this.Resize += async (s, e) => await this.EnqueUIChangeToRunAfterDelay(nameof(UpdateWidgetLayout), 180, c => UpdateWidgetLayout(headerText));
+            this.Resize += async (s, e) => await this.EnqueueUIChangeToRunAfterDelay(nameof(UpdateWidgetLayout), 180, c => UpdateWidgetLayout(headerText));
 
             this.EnableDragging(); //makes the panel behave like a draggable widget
             Header.EnableDragging(this); //makes the header of the panel draggable
+        }
+
+        public virtual void UpdateFromModel(object model)
+        {
+            throw new NotImplementedException();
         }
 
         public Widget? Caller { get; }
@@ -37,7 +44,7 @@
 
             widget.Location = Location;
             var zOrder = this.GetZOrder();
-            Parent.Controls.Add(widget);
+            Parent!.Controls.Add(widget);
             Parent.Controls.Remove(this);
             widget.SetZOrder(zOrder);
         }
@@ -48,19 +55,24 @@
 
             widget.Left = x;
             widget.Top = y;
-            this.Parent.Controls.Add(widget);
+            Parent!.Controls.Add(widget);
             widget.BringToFront();
+        }
+
+        public virtual void OnBeforeNavigate(IViewWidget destination)
+        {
         }
 
         public bool TryNavigateBackward()
         {
             if (Caller is null) return false;
 
+            if (Caller is IViewWidget w) w.OnBeforeNavigate(w);
             OnBeforeNavigate(Caller);
 
             Caller.Location = Location;
             var zOrder = this.GetZOrder();
-            Parent.Controls.Add(Caller);
+            Parent!.Controls.Add(Caller);
             Parent.Controls.Remove(this);
             Caller.SetZOrder(zOrder);
 
@@ -71,7 +83,6 @@
 
         public virtual void OnNavigationReturnedBack()
         {
-
         }
 
         private void InitializeComponent()
@@ -139,8 +150,8 @@
             }
         }
 
-        public virtual void OnBeforeNavigate(Widget destination)
-        {
-        }
+        //public virtual void OnBeforeNavigate(Widget destination)
+        //{
+        //}
     }
 }

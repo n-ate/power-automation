@@ -1,11 +1,12 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Interfaces;
 using PowerAutomation.Models;
 using System.Drawing.Imaging;
 using Vanara.PInvoke;
 
 namespace PowerAutomation.Widgets
 {
-    public partial class WorkspaceEditorWidget : Widget
+    public partial class WorkspaceEditorWidget : Widget, IViewWidget<Workspace>
     {
         private Workspace Model;
 
@@ -16,17 +17,16 @@ namespace PowerAutomation.Widgets
             UpdateFromModel(Model);
         }
 
-        public override void OnBeforeNavigate(Widget destination)
+        public override void OnBeforeNavigate(IViewWidget destination)
         {
             if (string.IsNullOrEmpty(TitleTextbox.Text))
             {
                 TitleTextbox.Text = "AutoSaved";
             }
 
-            UpdateModel(Model);
+            UpdateModel();
             App.SaveCurrentState();
-
-            base.OnBeforeNavigate(destination);
+            destination.UpdateFromModel(Model);
         }
 
         public override void OnNavigationReturnedBack()
@@ -81,7 +81,7 @@ namespace PowerAutomation.Widgets
             //NavigateForward(new ImageAnnotationWidget(this));
         }
 
-        private void UpdateFromModel(Workspace model)
+        public void UpdateFromModel(Workspace model)
         {
             IconImage.Image = model.Application.Icon;
             ClassTextbox.Text = model.Application.Class;
@@ -90,14 +90,20 @@ namespace PowerAutomation.Widgets
             DescriptionTextbox.Text = model.Description;
         }
 
-        private void UpdateModel(Workspace model)
+        public override void UpdateFromModel(object model)
+        {
+            if (model is Workspace m) UpdateFromModel(m);
+            else throw new ArgumentException($"Model argument is not correct type. Expected:{nameof(Workspace)}, Actual:{model.GetType().Name}");
+        }
+
+        private void UpdateModel()
         {
             var icon = IconImage.Image as Bitmap;
-            if (icon is not null) model.Application.Icon = icon;
-            model.Application.Class = ClassTextbox.Text;
-            model.Application.Titlebar = TitlebarTextbox.Text;
-            model.Title = TitleTextbox.Text;
-            model.Description = DescriptionTextbox.Text;
+            if (icon is not null) Model.Application.Icon = icon;
+            Model.Application.Class = ClassTextbox.Text;
+            Model.Application.Titlebar = TitlebarTextbox.Text;
+            Model.Title = TitleTextbox.Text;
+            Model.Description = DescriptionTextbox.Text;
         }
     }
 }

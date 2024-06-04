@@ -7,11 +7,11 @@ namespace PowerAutomation.Models
     /// </summary>
     public class Procedure : IProcedure
     {
-        private IProcedure[] _actions = new IProcedure[0];
+        private IProcedure[] _actions = Array.Empty<IProcedure>();
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        public string Key { get; set; }
+        public string Key { get; set; } = string.Empty;
 
         [Required]
         public IProcedure[] Procedures

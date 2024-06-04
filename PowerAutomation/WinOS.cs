@@ -43,7 +43,7 @@ namespace PowerAutomation
 
         public static async Task<HWND> GetWindowUserActivates(UserControl currentControl)
         {
-            var currentWindowHandle = currentControl.ParentForm.Handle;
+            var currentWindowHandle = currentControl.ParentForm!.Handle;
             var activeWindowHandle = await Task.Run(async () =>
             {
                 HWND foregroundWindowHandle;

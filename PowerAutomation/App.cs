@@ -33,7 +33,9 @@ namespace PowerAutomation
             {
                 if (_workspaces is null)
                 {
-                    var json = File.ReadAllText(@"C:\_\workspaces.json");
+                    const string path = @"C:\_\workspaces.json";
+                    var json = "[]";
+                    if (File.Exists(path)) json = File.ReadAllText(path);
                     _workspaces = JsonSerializer.Deserialize<Workspace[]>(json, SerializerOptions)!;
                 }
                 return _workspaces;
@@ -161,7 +163,7 @@ namespace PowerAutomation
 
             var image = App.Form.BackgroundImage;
             App.Form.BackgroundImage = null;
-            image.Dispose();
+            image?.Dispose();
 
             App.SetNotice("");
             return (selection, bounds.Value);

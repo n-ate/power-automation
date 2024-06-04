@@ -1,3 +1,7 @@
+using System.Runtime.Versioning;
+
+[assembly: SupportedOSPlatform("windows")]
+
 namespace PowerAutomation
 {
     internal static class Program

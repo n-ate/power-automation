@@ -21,7 +21,7 @@ namespace PowerAutomation.Models.Detection
         public int MatchAttempts { get; set; } = 1;
 
         [Required]
-        public string matchImage { get; set; }
+        public string matchImage { get; set; } = "//TODO: create default placeholder image..";
 
         [JsonIgnore]
         public Bitmap MatchImage
