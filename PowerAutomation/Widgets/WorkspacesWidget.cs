@@ -1,4 +1,5 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Extensions;
 using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
 
@@ -12,23 +13,26 @@ namespace PowerAutomation.Widgets
         {
             Model = model;
             InitializeComponent();
-            UpdateGuiFromModel();
         }
 
         public void UpdateGuiFromModel()
         {
             WorkspacesListview.Items.Clear();
             WorkspacesListview.SmallImageList = new ImageList();
-            foreach (var workspace in Model.OrderBy(d => d.Title))
+            foreach (var workspace in Model.Where(w => ShowDeletedCheckbox.Checked || w.Active))
             {
-                WorkspacesListview.SmallImageList.Images.Add(workspace.Title, workspace.Application.Icon);
-                var item = new ListViewItem();
-                item.Text = workspace.Title;
-                item.Tag = workspace;
-                item.Name = workspace.Title;
-                item.ImageKey = workspace.Title;
-                WorkspacesListview.Items.Add(item);
+                var icon = workspace.Active ? workspace.Application.Icon : workspace.Application.Icon.AdjustSaturation(0);
+                WorkspacesListview.SmallImageList.Images.Add(workspace.Title, icon);
+                var item = new ListViewItem()
+                {
+                    Text = workspace.Title,
+                    Tag = workspace,
+                    Name = workspace.Title,
+                    ImageKey = workspace.Title
+                };
                 item.SubItems.Add(workspace.Application.ProcessName);
+                if(!workspace.Active) item.ForeColor = Color.Gray;
+                WorkspacesListview.Items.Add(item);
             }
         }
 
@@ -54,10 +58,9 @@ namespace PowerAutomation.Widgets
             }
         }
 
-        public override void OnNavigationArrivedBack(Widget source)
+        private void ShowDeletedCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             UpdateGuiFromModel();
-            base.OnNavigationArrivedBack(source);
         }
     }
 }

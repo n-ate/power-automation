@@ -32,13 +32,14 @@
             WorkspacesListview = new ListView();
             TitleColumnHeader = new ColumnHeader();
             ProcessNameColumnDescription = new ColumnHeader();
+            ShowDeletedCheckbox = new CheckBox();
             SuspendLayout();
             // 
             // CreateDetectionButton
             // 
             CreateDetectionButton.BackColor = SystemColors.ButtonFace;
             CreateDetectionButton.FlatStyle = FlatStyle.Flat;
-            CreateDetectionButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            CreateDetectionButton.Font = new Font("Tahoma", 12F);
             CreateDetectionButton.Location = new Point(221, 43);
             CreateDetectionButton.Name = "CreateDetectionButton";
             CreateDetectionButton.Size = new Size(114, 32);
@@ -50,7 +51,7 @@
             // WorkspacesListview
             // 
             WorkspacesListview.Columns.AddRange(new ColumnHeader[] { TitleColumnHeader, ProcessNameColumnDescription });
-            WorkspacesListview.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            WorkspacesListview.Font = new Font("Tahoma", 10F);
             WorkspacesListview.Location = new Point(15, 90);
             WorkspacesListview.Name = "WorkspacesListview";
             WorkspacesListview.Size = new Size(320, 326);
@@ -69,17 +70,31 @@
             ProcessNameColumnDescription.Text = "Process";
             ProcessNameColumnDescription.Width = 200;
             // 
+            // ShowDeletedCheckbox
+            // 
+            ShowDeletedCheckbox.AutoSize = true;
+            ShowDeletedCheckbox.Location = new Point(16, 60);
+            ShowDeletedCheckbox.Name = "ShowInactiveCheckbox";
+            ShowDeletedCheckbox.Size = new Size(98, 19);
+            ShowDeletedCheckbox.TabIndex = 1029;
+            ShowDeletedCheckbox.Text = "Show Deleted";
+            ShowDeletedCheckbox.UseVisualStyleBackColor = true;
+            ShowDeletedCheckbox.CheckedChanged += ShowDeletedCheckbox_CheckedChanged;
+            // 
             // WorkspacesWidget
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(ShowDeletedCheckbox);
             Controls.Add(WorkspacesListview);
             Controls.Add(CreateDetectionButton);
             Name = "WorkspacesWidget";
             Size = new Size(350, 433);
             Controls.SetChildIndex(CreateDetectionButton, 0);
             Controls.SetChildIndex(WorkspacesListview, 0);
+            Controls.SetChildIndex(ShowDeletedCheckbox, 0);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -87,5 +102,6 @@
         private ListView WorkspacesListview;
         private ColumnHeader TitleColumnHeader;
         private ColumnHeader ProcessNameColumnDescription;
+        private CheckBox ShowDeletedCheckbox;
     }
 }
