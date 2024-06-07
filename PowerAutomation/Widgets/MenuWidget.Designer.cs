@@ -35,11 +35,12 @@
             // 
             // SettingsButton
             // 
-            SettingsButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            SettingsButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            SettingsButton.Font = new Font("Tahoma", 12F);
             SettingsButton.Location = new Point(16, 171);
             SettingsButton.Margin = new Padding(16, 8, 16, 16);
             SettingsButton.Name = "SettingsButton";
-            SettingsButton.Size = new Size(168, 40);
+            SettingsButton.Size = new Size(148, 40);
             SettingsButton.TabIndex = 4;
             SettingsButton.Text = "Settings";
             SettingsButton.UseVisualStyleBackColor = true;
@@ -47,11 +48,12 @@
             // 
             // WorkspacesButton
             // 
-            WorkspacesButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            WorkspacesButton.Location = new Point(16, 59);
+            WorkspacesButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            WorkspacesButton.Font = new Font("Tahoma", 12F);
+            WorkspacesButton.Location = new Point(16, 52);
             WorkspacesButton.Margin = new Padding(16, 8, 16, 8);
             WorkspacesButton.Name = "WorkspacesButton";
-            WorkspacesButton.Size = new Size(168, 40);
+            WorkspacesButton.Size = new Size(148, 40);
             WorkspacesButton.TabIndex = 1;
             WorkspacesButton.Text = "Workspaces";
             WorkspacesButton.UseVisualStyleBackColor = true;
@@ -59,26 +61,26 @@
             // 
             // MinimizeButton
             // 
-            MinimizeButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            MinimizeButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            MinimizeButton.Font = new Font("Tahoma", 12F);
             MinimizeButton.Location = new Point(16, 227);
             MinimizeButton.Margin = new Padding(16, 8, 16, 8);
             MinimizeButton.Name = "MinimizeButton";
-            MinimizeButton.Size = new Size(168, 40);
-            MinimizeButton.TabIndex = 1000;
+            MinimizeButton.Size = new Size(148, 40);
+            MinimizeButton.TabIndex = 5;
             MinimizeButton.Text = "Minimize";
             MinimizeButton.UseVisualStyleBackColor = true;
             MinimizeButton.Click += MinimizeButton_Click;
             // 
             // MenuWidget
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackColor = SystemColors.ActiveCaption;
             Controls.Add(MinimizeButton);
             Controls.Add(SettingsButton);
             Controls.Add(WorkspacesButton);
             Name = "MenuWidget";
-            Size = new Size(200, 288);
+            Size = new Size(180, 288);
             Controls.SetChildIndex(WorkspacesButton, 0);
             Controls.SetChildIndex(SettingsButton, 0);
             Controls.SetChildIndex(MinimizeButton, 0);

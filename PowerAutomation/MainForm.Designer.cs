@@ -50,6 +50,7 @@
             TrayIcon.Tag = "Tag";
             TrayIcon.Text = "Power Automation";
             TrayIcon.Visible = true;
+            TrayIcon.DoubleClick += TrayIcon_DoubleClick;
             // 
             // TrayIconContextMenu
             // 
@@ -80,6 +81,7 @@
             // 
             // TopNotice
             // 
+            TopNotice.BackColor = Color.Transparent;
             TopNotice.Dock = DockStyle.Top;
             TopNotice.Font = new Font("Tahoma", 28F, FontStyle.Bold);
             TopNotice.ForeColor = Color.Firebrick;
@@ -96,15 +98,14 @@
             // mainMenuWidget
             // 
             mainMenuWidget.BackColor = SystemColors.ActiveCaption;
-            mainMenuWidget.Location = new Point(334, 93);
+            mainMenuWidget.Location = new Point(323, 74);
             mainMenuWidget.Name = "mainMenuWidget";
-            mainMenuWidget.Size = new Size(200, 288);
+            mainMenuWidget.Size = new Size(180, 288);
             mainMenuWidget.TabIndex = 3;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(884, 661);
             Controls.Add(mainMenuWidget);

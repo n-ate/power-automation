@@ -8,6 +8,7 @@ namespace PowerAutomation
     {
         public MenuWidget() : base("Start")
         {
+            Caller = Widget.ApplicationRoot;
             InitializeComponent();
         }
 
