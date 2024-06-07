@@ -1,21 +1,25 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
 
 namespace PowerAutomation.Widgets
 {
-    public partial class WorkspacesWidget : Widget
+    public partial class WorkspacesWidget : Widget, IViewWidget<WorkspaceCollection>
     {
-        public WorkspacesWidget(Widget caller) : base("Workspaces", caller)
+        public WorkspaceCollection Model { get; }
+
+        public WorkspacesWidget(WorkspaceCollection model) : base("Workspaces")
         {
+            Model = model;
             InitializeComponent();
-            UpdateFromModel(App.Workspaces);
+            UpdateGuiFromModel();
         }
 
-        private void UpdateFromModel(Workspace[] model)
+        public void UpdateGuiFromModel()
         {
             WorkspacesListview.Items.Clear();
             WorkspacesListview.SmallImageList = new ImageList();
-            foreach (var workspace in App.Workspaces.OrderBy(d => d.Title))
+            foreach (var workspace in Model.OrderBy(d => d.Title))
             {
                 WorkspacesListview.SmallImageList.Images.Add(workspace.Title, workspace.Application.Icon);
                 var item = new ListViewItem();
@@ -30,13 +34,13 @@ namespace PowerAutomation.Widgets
 
         private void CreateWorkspaceButton_Click(object sender, EventArgs e)
         {
-            var workspace = App.Workspaces.FirstOrDefault(d => d.Title == "AutoSaved");
+            var workspace = Model.FirstOrDefault(d => d.Title == "AutoSaved");
             if (workspace is null)
             {
                 workspace = new Workspace();
-                App.Workspaces = App.Workspaces.Concat(new[] { workspace }).OrderBy(d => d.Title).ToArray();
+                Model.Add(workspace);
             }
-            var widget = new WorkspaceEditorWidget(this, workspace);
+            var widget = new WorkspaceEditorWidget(workspace);
             NavigateForward(widget);
         }
 
@@ -45,21 +49,15 @@ namespace PowerAutomation.Widgets
             var workspace = WorkspacesListview.FocusedItem?.Tag as Workspace;
             if (workspace is not null)
             {
-                var widget = new WorkspaceViewerWidget(this, workspace);
+                var widget = new WorkspaceViewerWidget(workspace);
                 NavigateForward(widget);
             }
         }
 
-        public override void OnBeforeNavigate(Widget destination)
+        public override void OnNavigationArrivedBack(Widget source)
         {
-            base.OnBeforeNavigate(destination);
-        }
-
-        public override void OnNavigationReturnedBack()
-        {
-            UpdateFromModel(App.Workspaces);
-
-            base.OnNavigationReturnedBack();
+            UpdateGuiFromModel();
+            base.OnNavigationArrivedBack(source);
         }
     }
 }

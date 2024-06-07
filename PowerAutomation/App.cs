@@ -1,10 +1,5 @@
 ﻿using PowerAutomation.Models;
-using System.Drawing.Imaging;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Vanara.PInvoke;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace PowerAutomation
 {
@@ -12,7 +7,7 @@ namespace PowerAutomation
     {
         private static MainForm? _form = null;
 
-        private static Workspace[]? _workspaces = null;
+        private static WorkspaceCollection? _workspaces = null;
 
         private static JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
         {
@@ -30,14 +25,14 @@ namespace PowerAutomation
             }
         }
 
-        public static Workspace[] Workspaces
+        public static WorkspaceCollection Workspaces
         {
             get
             {
                 if (_workspaces is null)
                 {
                     var json = File.ReadAllText(@"C:\_\workspaces.json");
-                    _workspaces = JsonSerializer.Deserialize<Workspace[]>(json, SerializerOptions)!;
+                    _workspaces = JsonSerializer.Deserialize<WorkspaceCollection>(json, SerializerOptions)!;
                 }
                 return _workspaces;
             }
@@ -113,9 +108,9 @@ namespace PowerAutomation
         public static void RemoveImageWithMaskedBackground()
         {
             var toRemove = new List<Control>();
-            foreach(Control control in Form.Controls)
+            foreach (Control control in Form.Controls)
             {
-                if(control.Tag.ToString() == nameof(RemoveImageWithMaskedBackground)) toRemove.Add(control);
+                if (control.Tag.ToString() == nameof(RemoveImageWithMaskedBackground)) toRemove.Add(control);
             }
             foreach (var control in toRemove) Form.Controls.Remove(control);
         }

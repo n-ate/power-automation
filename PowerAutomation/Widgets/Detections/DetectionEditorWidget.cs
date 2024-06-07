@@ -1,21 +1,21 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
 using PowerAutomation.Models.Detection;
-using System.Reflection;
 using Vanara.PInvoke;
 
 namespace PowerAutomation.Widgets
 {
-    public partial class DetectionEditorWidget : Widget
+    public partial class DetectionEditorWidget : Widget, IEditWidget<ImageDetection>
     {
         private string autoKey = string.Empty;
 
-        public DetectionEditorWidget(Widget caller, ApplicationInformation appInfo, ImageDetection model) : base("Detection Task", caller)
+        public DetectionEditorWidget(ApplicationInformation appInfo, ImageDetection model) : base("Detection Task")
         {
             AppInfo = appInfo;
             Model = model;
             InitializeComponent();
-            UpdateFromModel(Model);
+            UpdateGuiFromModel();
         }
 
         public ApplicationInformation AppInfo { get; }
@@ -23,17 +23,51 @@ namespace PowerAutomation.Widgets
 
         public Bounds SelectionLocation { get; private set; }
 
-        public override void OnBeforeNavigate(Widget destination)
+        public override void OnBeforeNavigation(Widget destination)
         {
-            UpdateModel(Model);
+            base.OnBeforeNavigation(destination);
+            UpdateModelFromGui(); //may not need..
             App.SaveCurrentState();
-            base.OnBeforeNavigate(destination);
         }
 
-        public override void OnNavigationReturnedBack()
+        public override void OnNavigationArrivedBack(Widget source)
         {
-            base.OnNavigationReturnedBack();
-            UpdateFromModel(Model); //model may have changed while away
+            base.OnNavigationArrivedBack(source);
+            UpdateGuiFromModel(); //model may have changed while away
+        }
+
+        public void UpdateGuiFromModel()
+        {
+            SelectedImage.Image = Model.MatchImage;
+            SelectionLocation = Model.Location;
+            LocationLabel.Text = $"top:{SelectionLocation.Top}, left:{SelectionLocation.Left}, h:{SelectionLocation.Height}, w:{SelectionLocation.Width}";
+            TitleTextbox.Text = Model.Title;
+            KeyTextbox.Text = Model.Key;
+            DescriptionTextbox.Text = Model.Description;
+            if (Model.Location.Top == 0 && Model.Location.Left == 0 && Model.Location.Bottom == 0 && Model.Location.Right == 0)
+            { //default values
+                LocationLabel.Text = string.Empty;
+            }
+            else LocationLabel.Text = $"top:{Model.Location.Top}, left:{Model.Location.Left}, h:{Model.Location.Height}, w:{Model.Location.Width}";
+            MatchPercentTrackbar.Value = (int)(Model.MinMatchPercentage * 100);
+            MatchPercentLabel.Text = $"{MatchPercentTrackbar.Value}%";
+            ToleranceTrackbar.Value = Model.MatchTolerance;
+            ToleranceNumberLabel.Text = Model.MatchTolerance.ToString();
+            RetriesNumeric.Value = Model.MatchAttempts;
+            MSRetryWaitNumeric.Value = Model.MatchAttemptDelayMS;
+        }
+
+        public void UpdateModelFromGui()
+        {
+            Model.MatchImage = (SelectedImage.Image as Bitmap)!;
+            Model.Location = SelectionLocation;
+            Model.Key = KeyTextbox.Text;
+            Model.Title = TitleTextbox.Text;
+            Model.Description = DescriptionTextbox.Text;
+            Model.MinMatchPercentage = MatchPercentTrackbar.Value / 100f;
+            Model.MatchTolerance = ToleranceTrackbar.Value;
+            Model.MatchAttempts = (int)RetriesNumeric.Value;
+            Model.MatchAttemptDelayMS = (int)MSRetryWaitNumeric.Value;
         }
 
         private void MatchPercentTrackbar_Scroll(object sender, EventArgs e)
@@ -50,7 +84,7 @@ namespace PowerAutomation.Widgets
             }
             else
             {
-                var widget = new ImageToolsWidget(this, handle, Model);
+                var widget = new ImageToolsWidget(handle, Model);
                 NavigateForward(widget);
             }
         }
@@ -60,42 +94,8 @@ namespace PowerAutomation.Widgets
             if (KeyTextbox.Text == autoKey) //user has not changed the key
             {
                 autoKey = KeyTextbox.Text = TitleTextbox.Text.Replace(" ", "");
-                UpdateModel(Model);
+                UpdateModelFromGui();
             }
-        }
-
-        private void UpdateFromModel(ImageDetection model)
-        {
-            SelectedImage.Image = Model.MatchImage;
-            SelectionLocation = model.Location;
-            LocationLabel.Text = $"top:{SelectionLocation.Top}, left:{SelectionLocation.Left}, h:{SelectionLocation.Height}, w:{SelectionLocation.Width}";
-            TitleTextbox.Text = model.Title;
-            KeyTextbox.Text = model.Key;
-            DescriptionTextbox.Text = model.Description;
-            if (model.Location.Top == 0 && model.Location.Left == 0 && model.Location.Bottom == 0 && model.Location.Right == 0)
-            { //default values
-                LocationLabel.Text = string.Empty;
-            }
-            else LocationLabel.Text = $"top:{model.Location.Top}, left:{model.Location.Left}, h:{model.Location.Height}, w:{model.Location.Width}";
-            MatchPercentTrackbar.Value = (int)(model.MinMatchPercentage * 100);
-            MatchPercentLabel.Text = $"{MatchPercentTrackbar.Value}%";
-            ToleranceTrackbar.Value = model.MatchTolerance;
-            ToleranceNumberLabel.Text = model.MatchTolerance.ToString();
-            RetriesNumeric.Value = model.MatchAttempts;
-            MSRetryWaitNumeric.Value = model.MatchAttemptDelayMS;
-        }
-
-        private void UpdateModel(ImageDetection model)
-        {
-            Model.MatchImage = (SelectedImage.Image as Bitmap)!;
-            Model.Location = SelectionLocation;
-            model.Key = KeyTextbox.Text;
-            model.Title = TitleTextbox.Text;
-            Model.Description = DescriptionTextbox.Text;
-            Model.MinMatchPercentage = MatchPercentTrackbar.Value / 100f;
-            Model.MatchTolerance = ToleranceTrackbar.Value;
-            Model.MatchAttempts = (int)RetriesNumeric.Value;
-            Model.MatchAttemptDelayMS = (int)MSRetryWaitNumeric.Value;
         }
 
         //public ImageDetection Model { get; }

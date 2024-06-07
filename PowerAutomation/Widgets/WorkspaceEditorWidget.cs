@@ -1,37 +1,60 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
 
 namespace PowerAutomation.Widgets
 {
-    public partial class WorkspaceEditorWidget : Widget
+    public partial class WorkspaceEditorWidget : Widget, IEditWidget<Workspace>
     {
-        private Workspace Model;
-
-        public WorkspaceEditorWidget(Widget caller, Workspace model) : base("Workspace", caller)
+        public WorkspaceEditorWidget(Workspace model) : base("Workspace")
         {
             Model = model;
             InitializeComponent();
-            UpdateFromModel(Model);
+            UpdateGuiFromModel();
         }
 
-        public override void OnBeforeNavigate(Widget destination)
+        public Workspace Model { get; }
+
+        public override void OnBeforeNavigation(Widget destination)
         {
             if (string.IsNullOrEmpty(TitleTextbox.Text))
             {
                 TitleTextbox.Text = "AutoSaved";
             }
 
-            UpdateModel(Model);
+            UpdateModelFromGui();
             App.SaveCurrentState();
 
-            base.OnBeforeNavigate(destination);
+            base.OnBeforeNavigation(destination);
         }
 
-        public override void OnNavigationReturnedBack()
+        public override void OnNavigationArrivedBack(Widget source)
         {
-            base.OnNavigationReturnedBack();
+            base.OnNavigationArrivedBack(source);
+            UpdateGuiFromModel();
+        }
 
-            UpdateFromModel(Model);
+        public void UpdateGuiFromModel()
+        {
+            TitleTextbox.Text = Model.Title;
+            IconImage.Image = Model.Application.Icon;
+            AppTypeTextbox.Text = Model.Application.IsWinStoreApp ? "Windows Store" : "Default";
+            ProcessNameTextbox.Text = Model.Application.ProcessName;
+            ModuleNameTextbox.Text = Model.Application.ModuleName;
+            ClassTextbox.Text = Model.Application.Class;
+            DescriptionTextbox.Text = Model.Description;
+        }
+
+        public void UpdateModelFromGui()
+        {
+            Model.Title = TitleTextbox.Text;
+            var icon = IconImage.Image as Bitmap;
+            if (icon is not null) Model.Application.Icon = icon;
+            Model.Application.IsWinStoreApp = AppTypeTextbox.Text == "Windows Store";
+            Model.Application.ProcessName = ProcessNameTextbox.Text;
+            Model.Application.ModuleName = ModuleNameTextbox.Text;
+            Model.Application.Class = ClassTextbox.Text;
+            Model.Description = DescriptionTextbox.Text;
         }
 
         private void AppInfoTextbox_Click(object sender, EventArgs e)
@@ -41,8 +64,8 @@ namespace PowerAutomation.Widgets
 
         private void ContinueButton_Click(object sender, EventArgs e)
         {
-            var widget = new WorkspaceViewerWidget(this, Model);
-            NavigateForward(widget);
+            var widget = new WorkspaceViewerWidget(Model);
+            NavigateReplace(widget);
         }
 
         private async void SelectApplicationButton_Click(object sender, EventArgs e)
@@ -70,29 +93,6 @@ namespace PowerAutomation.Widgets
             Show();
             App.SetNotice("");
             //NavigateForward(new ImageAnnotationWidget(this));
-        }
-
-        private void UpdateFromModel(Workspace model)
-        {
-            TitleTextbox.Text = model.Title;
-            IconImage.Image = model.Application.Icon;
-            AppTypeTextbox.Text = model.Application.IsWinStoreApp ? "Windows Store" : "Default";
-            ProcessNameTextbox.Text = model.Application.ProcessName;
-            ModuleNameTextbox.Text = model.Application.ModuleName;
-            ClassTextbox.Text = model.Application.Class;
-            DescriptionTextbox.Text = model.Description;
-        }
-
-        private void UpdateModel(Workspace model)
-        {
-            model.Title = TitleTextbox.Text;
-            var icon = IconImage.Image as Bitmap;
-            if (icon is not null) model.Application.Icon = icon;
-            model.Application.IsWinStoreApp = AppTypeTextbox.Text == "Windows Store";
-            model.Application.ProcessName = ProcessNameTextbox.Text;
-            model.Application.ModuleName = ModuleNameTextbox.Text;
-            model.Application.Class = ClassTextbox.Text;
-            model.Description = DescriptionTextbox.Text;
         }
     }
 }

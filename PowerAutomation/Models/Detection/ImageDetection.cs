@@ -28,7 +28,7 @@ namespace PowerAutomation.Models.Detection
         {
             get
             {
-                if(string.IsNullOrEmpty(matchImage)) return new Bitmap(1, 1);
+                if (string.IsNullOrEmpty(matchImage)) return new Bitmap(1, 1);
                 var bytes = Convert.FromBase64String(matchImage);
                 using (var stream = new MemoryStream(bytes))
                 {

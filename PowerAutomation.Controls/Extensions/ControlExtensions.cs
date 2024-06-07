@@ -7,12 +7,12 @@ namespace PowerAutomation
         private static ConcurrentDictionary<string, CancellationTokenSource> _enquedUIChanges = new ConcurrentDictionary<string, CancellationTokenSource>();
 
         /// <summary>
-        /// Runs the action after the delay has occured. If called again during the delay, the delay is restarted.
+        /// Runs the action after the delay has occurred. If called again during the delay, the delay is restarted.
         /// </summary>
         /// <param name="key">A unique key to isolate this action run from others.</param>
         /// <param name="delay">How long to wait for additional calls before firing the action.</param>
         /// <param name="action">The action to perform.</param>
-        public static async Task EnqueUIChangeToRunAfterDelay<T>(this T control, string key, int delay, Action<T> action)
+        public static async Task EnqueueUIChangeToRunAfterDelay<T>(this T control, string key, int delay, Action<T> action)
             where T : Control
         {
             var source = _enquedUIChanges.AddOrUpdate(key, new CancellationTokenSource(), (k, s) => { s.Cancel(false); return new CancellationTokenSource(); });
@@ -117,7 +117,7 @@ namespace PowerAutomation
         /// </summary>
         public static int GetZOrder(this Control control)
         {
-            return control.Parent.Controls.GetChildIndex(control);
+            return control.Parent!.Controls.GetChildIndex(control);
         }
 
         public static bool IsChildOf(this Control child, Control parent)
@@ -140,7 +140,7 @@ namespace PowerAutomation
         /// </summary>
         public static void SetZOrder(this Control control, int zOrder)
         {
-            control.Parent.Controls.SetChildIndex(control, zOrder);
+            control.Parent!.Controls.SetChildIndex(control, zOrder);
         }
     }
 }

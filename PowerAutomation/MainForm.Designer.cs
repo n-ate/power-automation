@@ -35,8 +35,8 @@
             ExitMenuItem = new ToolStripMenuItem();
             AutoHideWidgetsMenuItem = new ToolStripMenuItem();
             MaximizeMenuItem = new ToolStripMenuItem();
-            mainMenuWidget = new MenuWidget();
             TopNotice = new Label();
+            mainMenuWidget = new MenuWidget();
             TrayIconContextMenu.SuspendLayout();
             SuspendLayout();
             // 
@@ -78,18 +78,10 @@
             MaximizeMenuItem.Size = new Size(172, 22);
             MaximizeMenuItem.Text = "Maximize";
             // 
-            // mainMenuWidget
-            // 
-            mainMenuWidget.BackColor = SystemColors.ActiveCaption;
-            mainMenuWidget.Location = new Point(343, 102);
-            mainMenuWidget.Name = "mainMenuWidget";
-            mainMenuWidget.Size = new Size(200, 279);
-            mainMenuWidget.TabIndex = 1;
-            // 
             // TopNotice
             // 
             TopNotice.Dock = DockStyle.Top;
-            TopNotice.Font = new Font("Tahoma", 28F, FontStyle.Bold, GraphicsUnit.Point);
+            TopNotice.Font = new Font("Tahoma", 28F, FontStyle.Bold);
             TopNotice.ForeColor = Color.Firebrick;
             TopNotice.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
             TopNotice.Location = new Point(0, 0);
@@ -101,14 +93,23 @@
             TopNotice.MouseEnter += TopNotice_MouseEnter;
             TopNotice.MouseLeave += TopNotice_MouseLeave;
             // 
+            // mainMenuWidget
+            // 
+            mainMenuWidget.BackColor = SystemColors.ActiveCaption;
+            mainMenuWidget.Location = new Point(334, 93);
+            mainMenuWidget.Name = "mainMenuWidget";
+            mainMenuWidget.Size = new Size(200, 288);
+            mainMenuWidget.TabIndex = 3;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(884, 661);
-            Controls.Add(TopNotice);
             Controls.Add(mainMenuWidget);
+            Controls.Add(TopNotice);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "MainForm";
             TrayIconContextMenu.ResumeLayout(false);
             ResumeLayout(false);
@@ -119,8 +120,8 @@
         private ContextMenuStrip TrayIconContextMenu;
         private ToolStripMenuItem ExitMenuItem;
         private ToolStripMenuItem AutoHideWidgetsMenuItem;
-        private MenuWidget mainMenuWidget;
         public Label TopNotice;
         private ToolStripMenuItem MaximizeMenuItem;
+        private MenuWidget mainMenuWidget;
     }
 }

@@ -1,59 +1,59 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
 using PowerAutomation.Widgets.Procedures;
 
 namespace PowerAutomation.Widgets
 {
-    public partial class WorkspaceViewerWidget : Widget
+    public partial class WorkspaceViewerWidget : Widget, IViewWidget<Workspace>
     {
-        private Workspace Model;
+        public Workspace Model { get; }
 
-        public WorkspaceViewerWidget(Widget caller, Workspace model) : base("Workspace", caller)
+        public WorkspaceViewerWidget(Workspace model) : base("Workspace")
         {
             Model = model;
             InitializeComponent();
-            UpdateFromModel(Model);
+            UpdateGuiFromModel();
         }
 
-        private void UpdateFromModel(Workspace model)
+        public void UpdateGuiFromModel()
         {
-            IconImage.Image = model.Application.Icon;
-            TitleLabel.Text = model.Title;
-            AppTypeValueLabel.Text = model.Application.IsWinStoreApp ? "Windows Store" : "Default";
-            ProcessNameValueLabel.Text = model.Application.ProcessName;
-            ModuleNameValueLabel.Text = model.Application.ModuleName;
-            ClassValueLabel.Text = model.Application.Class;
-            DescriptionValueLabel.Text = model.Description;
+            IconImage.Image = Model.Application.Icon;
+            TitleLabel.Text = Model.Title;
+            AppTypeValueLabel.Text = Model.Application.IsWinStoreApp ? "Windows Store" : "Default";
+            ProcessNameValueLabel.Text = Model.Application.ProcessName;
+            ModuleNameValueLabel.Text = Model.Application.ModuleName;
+            ClassValueLabel.Text = Model.Application.Class;
+            DescriptionValueLabel.Text = Model.Description;
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            var widget = new WorkspaceEditorWidget(this, Model);
+            var widget = new WorkspaceEditorWidget(Model);
             NavigateForward(widget);
         }
 
         private void DetectionsButton_Click(object sender, EventArgs e)
         {
-            var widget = new DetectionsWidget(this, Model);
+            var widget = new DetectionsWidget(Model);
             NavigateForward(widget);
         }
 
         private void ProceduresButton_Click(object sender, EventArgs e)
         {
-            var widget = new ProceduresWidget(this, Model);
+            var widget = new ProceduresWidget(Model);
             NavigateForward(widget);
         }
 
-        public override void OnNavigationReturnedBack()
+        public override void OnNavigationArrivedBack(Widget source)
         {
-            base.OnNavigationReturnedBack();
-
-            UpdateFromModel(Model);
+            base.OnNavigationArrivedBack(source);
+            UpdateGuiFromModel();
         }
 
-        public override void OnBeforeNavigate(Widget destination)
+        public override void OnBeforeNavigation(Widget destination)
         {
-            base.OnBeforeNavigate(destination);
+            base.OnBeforeNavigation(destination);
         }
     }
 }

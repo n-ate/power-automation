@@ -1,28 +1,28 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
 using PowerAutomation.Properties;
 
 namespace PowerAutomation.Widgets.Procedures
 {
-    public partial class ProceduresWidget : Widget
+    public partial class ProceduresWidget : Widget, IViewWidget<Workspace>
     {
-        public ProceduresWidget(Widget caller, Workspace model) : base("Procedures", caller)
+        public ProceduresWidget(Workspace model) : base("Procedures")
         {
             Model = model;
             InitializeComponent();
-            UpdateFromModel(Model);
+            UpdateGuiFromModel();
         }
 
         public Workspace Model { get; }
 
         public Type? ProcedureTypeToCreate { get; private set; }
 
-        public override void OnNavigationReturnedBack()
+        public override void OnNavigationArrivedBack(Widget source)
         {
-            base.OnNavigationReturnedBack();
-
+            base.OnNavigationArrivedBack(source);
             TryCreateNewProcedure();
-            UpdateFromModel(Model);
+            UpdateGuiFromModel();
         }
 
         public void TryCreateNewProcedure()
@@ -40,7 +40,7 @@ namespace PowerAutomation.Widgets.Procedures
                         action = new SimulatedAction();
                         Model.Procedures = Model.Procedures.Where(p => p.Key != "AutoSaved").Concat(new[] { action }).OrderBy(d => d.Key).ToArray();
                     }
-                    widget = new ActionProcedureEditorWidget(this, action!);
+                    widget = new ActionProcedureEditorWidget(action!);
                 }
                 else if (ProcedureTypeToCreate == typeof(Procedure))
                 {
@@ -51,7 +51,7 @@ namespace PowerAutomation.Widgets.Procedures
                         composite = new Procedure();
                         Model.Procedures = Model.Procedures.Where(p => p.Key != "AutoSaved").Concat(new[] { composite }).OrderBy(d => d.Key).ToArray();
                     }
-                    widget = new CompositeProcedureEditorWidget(this, composite!);
+                    widget = new CompositeProcedureEditorWidget(composite!);
                 }
                 else throw new NotImplementedException();
                 ProcedureTypeToCreate = null; //erase chosen type..
@@ -61,7 +61,7 @@ namespace PowerAutomation.Widgets.Procedures
 
         private void CreateProcedureButton_Click(object sender, EventArgs e)
         {
-            var widget = new ProcedureTypeSelectorWidget(this, t => ProcedureTypeToCreate = t);
+            var widget = new ProcedureTypeSelectorWidget(t => ProcedureTypeToCreate = t);
             NavigateForward(widget);
         }
 
@@ -73,24 +73,24 @@ namespace PowerAutomation.Widgets.Procedures
                 Widget? widget = null;
                 if (procedure is SimulatedAction action)
                 {
-                    widget = new ActionProcedureEditorWidget(this, action);
+                    widget = new ActionProcedureEditorWidget(action);
                 }
                 else if (procedure is Procedure composite)
                 {
-                    widget = new CompositeProcedureEditorWidget(this, composite);
+                    widget = new CompositeProcedureEditorWidget(composite);
                 }
                 else throw new NotImplementedException();
                 NavigateForward(widget);
             }
         }
 
-        private void UpdateFromModel(Workspace model)
+        public void UpdateGuiFromModel()
         {
             ProceduresListview.Items.Clear();
             ProceduresListview.SmallImageList = new ImageList();
             ProceduresListview.SmallImageList.Images.Add("action", Images.action_32);
             ProceduresListview.SmallImageList.Images.Add("composite", Images.composite_32);
-            foreach (var procedure in model.Procedures.OrderBy(d => d.Title))
+            foreach (var procedure in Model.Procedures.OrderBy(d => d.Title))
             {
                 var item = new ListViewItem();
                 item.Text = procedure.Title;

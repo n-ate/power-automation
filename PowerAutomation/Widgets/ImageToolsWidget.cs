@@ -1,15 +1,13 @@
 ﻿using PowerAutomation.Controls;
-using PowerAutomation.Models;
 using PowerAutomation.Models.Detection;
 using System.Drawing.Imaging;
-using System.Reflection.PortableExecutable;
 using Vanara.PInvoke;
 
 namespace PowerAutomation.Widgets
 {
     public partial class ImageToolsWidget : Widget
     {
-        public ImageToolsWidget(Widget caller, HWND targetHandle, ImageDetection model) : base("Tools", caller)
+        public ImageToolsWidget(HWND targetHandle, ImageDetection model) : base("Tools")
         {
             TargetHandle = targetHandle;
             Model = model;
@@ -34,7 +32,7 @@ namespace PowerAutomation.Widgets
             Model.Location.Width = response.Bounds.Width;
             Model.MatchImage = response.Image;
 
-            TryNavigateBackward();
+            NavigateBackward();
         }
 
         public ImageDetection Model { get; }
@@ -61,7 +59,7 @@ namespace PowerAutomation.Widgets
             Rectangle? bounds = null;
 
             App.SetNotice("Click and drag to select area to match.");
-                
+
             var selectionTool = new Panel()
             {
                 AutoSize = false,
@@ -119,9 +117,7 @@ namespace PowerAutomation.Widgets
                 control.Controls.Remove(selectionTool);
             };
 
-
             while (bounds is null || selection is null) await Task.Delay(50);
-
 
             App.SetNotice("");
             return (selection, bounds.Value);
