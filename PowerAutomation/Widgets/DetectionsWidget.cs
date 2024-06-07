@@ -1,29 +1,34 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
 using PowerAutomation.Models.Detection;
 
 namespace PowerAutomation.Widgets
 {
-    public partial class DetectionsWidget : Widget
+    public partial class DetectionsWidget : Widget, IViewWidget<Workspace>
     {
-        public DetectionsWidget(Widget caller, Workspace model) : base("Detections", caller)
+        public DetectionsWidget(Workspace model) : base("Detections")
         {
             Model = model;
             InitializeComponent();
-            UpdateFromModel(Model);
         }
 
-        private void UpdateFromModel(Workspace model)
+        public Workspace Model { get; }
+
+        public void UpdateGuiFromModel()
         {
+            DetectionsListview.Items.Clear();
             DetectionsListview.SmallImageList = new ImageList();
-            foreach (var detection in model.Detections.OrderBy(d => d.Title))
+            foreach (var detection in Model.Detections.OrderBy(d => d.Title))
             {
                 DetectionsListview.SmallImageList.Images.Add(detection.Key, detection.MatchImage);
-                var item = new ListViewItem();
-                item.Text = detection.Title;
-                item.Tag = detection;
-                item.Name = detection.Key;
-                item.ImageKey = detection.Key;
+                var item = new ListViewItem
+                {
+                    Text = detection.Title,
+                    Tag = detection,
+                    Name = detection.Key,
+                    ImageKey = detection.Key,
+                };
                 DetectionsListview.Items.Add(item);
                 item.SubItems.Add($"t:{detection.Location.Top}, l:{detection.Location.Left}, h:{detection.Location.Height}, w:{detection.Location.Width}");
                 item.SubItems.Add(detection.MatchAttempts.ToString());
@@ -31,17 +36,15 @@ namespace PowerAutomation.Widgets
             }
         }
 
-        public Workspace Model { get; }
-
         private void CreateDetectionButton_Click(object sender, EventArgs e)
         {
             var detection = Model.Detections.FirstOrDefault(d => d.Key == "AutoSaved");
             if (detection is null)
             {
                 detection = new ImageDetection();
-                Model.Detections = Model.Detections.Concat(new[] { detection }).OrderBy(d => d.Key).ToArray();
+                Model.Detections = Model.Detections.Concat([detection]).OrderBy(d => d.Key).ToArray();
             }
-            var widget = new DetectionEditorWidget(this, detection);
+            var widget = new DetectionEditorWidget(detection);
             NavigateForward(widget);
         }
 
@@ -50,15 +53,15 @@ namespace PowerAutomation.Widgets
             var detection = DetectionsListview.FocusedItem?.Tag as ImageDetection;
             if (detection is not null)
             {
-                var widget = new DetectionEditorWidget(this, detection);
+                var widget = new DetectionEditorWidget(detection);
                 NavigateForward(widget);
             }
         }
 
-        public override void OnNavigationReturnedBack()
-        {
-            base.OnNavigationReturnedBack();
-            UpdateFromModel(Model);
-        }
+        //public override void OnNavigationArrivedBack(Widget source)
+        //{
+        //    base.OnNavigationArrivedBack(source);
+        //    UpdateFromModel(Model);
+        //}
     }
 }

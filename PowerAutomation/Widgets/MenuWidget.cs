@@ -1,18 +1,20 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Widgets;
 
 namespace PowerAutomation
 {
-    public partial class MenuWidget : Widget
+    public partial class MenuWidget : Widget, IWidget
     {
-        public MenuWidget() : base("Workspaces Start", null)
+        public MenuWidget() : base("Start")
         {
+            Caller = Widget.ApplicationRoot;
             InitializeComponent();
         }
 
         private void WorkspacesButton_Click(object sender, EventArgs e)
         {
-            var widget = new WorkspacesWidget(this);
+            var widget = new WorkspacesWidget(App.Workspaces);
             NavigateForward(widget);
         }
 

@@ -1,41 +1,43 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models.Detection;
 
 namespace PowerAutomation.Widgets
 {
-    public partial class DetectionEditorWidget : Widget
+    public partial class DetectionEditorWidget : Widget, IEditWidget<ImageDetection>
     {
         private string autoKey = string.Empty;
 
-        public DetectionEditorWidget(Widget caller, ImageDetection model) : base("Detection Task", caller)
+        public DetectionEditorWidget(ImageDetection model) : base("Detection Task")
         {
             Model = model;
             InitializeComponent();
-            UpdateFromModel(Model);
         }
 
-        private void UpdateFromModel(ImageDetection model)
+        public ImageDetection Model { get; }
+
+        public void UpdateGuiFromModel()
         {
-            TitleTextbox.Text = model.Title;
-            KeyTextbox.Text = model.Key;
-            DescriptionTextbox.Text = model.Description;
-            if (model.Location.Top == 0 && model.Location.Left == 0 && model.Location.Bottom == 0 && model.Location.Right == 0)
+            TitleTextbox.Text = Model.Title;
+            KeyTextbox.Text = Model.Key;
+            DescriptionTextbox.Text = Model.Description;
+            if (Model.Location.Top == 0 && Model.Location.Left == 0 && Model.Location.Bottom == 0 && Model.Location.Right == 0)
             { //default values
                 LocationLabel.Text = string.Empty;
             }
-            else LocationLabel.Text = $"top:{model.Location.Top}, left:{model.Location.Left}, h:{model.Location.Height}, w:{model.Location.Width}";
-            MatchPercentTrackbar.Value = (int)(model.MinMatchPercentage * 100);
+            else LocationLabel.Text = $"top:{Model.Location.Top}, left:{Model.Location.Left}, h:{Model.Location.Height}, w:{Model.Location.Width}";
+            MatchPercentTrackbar.Value = (int)(Model.MinMatchPercentage * 100);
             MatchPercentLabel.Text = $"{MatchPercentTrackbar.Value}%";
-            ToleranceTrackbar.Value = model.MatchTolerance;
-            ToleranceNumberLabel.Text = model.MatchTolerance.ToString();
-            RetriesNumeric.Value = model.MatchAttempts;
-            MSRetryWaitNumeric.Value = model.MatchAttemptDelayMS;
+            ToleranceTrackbar.Value = Model.MatchTolerance;
+            ToleranceNumberLabel.Text = Model.MatchTolerance.ToString();
+            RetriesNumeric.Value = Model.MatchAttempts;
+            MSRetryWaitNumeric.Value = Model.MatchAttemptDelayMS;
         }
 
-        private void UpdateModel(ImageDetection model)
+        public void UpdateModelFromGui()
         {
-            model.Key = KeyTextbox.Text;
-            model.Title = TitleTextbox.Text;
+            Model.Key = KeyTextbox.Text;
+            Model.Title = TitleTextbox.Text;
             Model.Description = DescriptionTextbox.Text;
             Model.MinMatchPercentage = MatchPercentTrackbar.Value / 100f;
             Model.MatchTolerance = ToleranceTrackbar.Value;
@@ -43,15 +45,9 @@ namespace PowerAutomation.Widgets
             Model.MatchAttemptDelayMS = (int)MSRetryWaitNumeric.Value;
         }
 
-        public ImageDetection Model { get; }
-
-        private void TitleTextbox_KeyUp(object sender, KeyEventArgs e)
+        private void MatchPercentTrackbar_Scroll(object sender, EventArgs e)
         {
-            if (KeyTextbox.Text == autoKey) //user has not changed the key
-            {
-                autoKey = KeyTextbox.Text = TitleTextbox.Text.Replace(" ", "");
-                UpdateModel(Model);
-            }
+            MatchPercentLabel.Text = $"{MatchPercentTrackbar.Value}%";
         }
 
         private async void SelectImageButton_Click(object sender, EventArgs e)
@@ -67,20 +63,24 @@ namespace PowerAutomation.Widgets
             Show();
         }
 
-        private void MatchPercentTrackbar_Scroll(object sender, EventArgs e)
+        private void TitleTextbox_KeyUp(object sender, KeyEventArgs e)
         {
-            MatchPercentLabel.Text = $"{MatchPercentTrackbar.Value}%";
+            if (KeyTextbox.Text == autoKey) //user has not changed the key
+            {
+                autoKey = KeyTextbox.Text = TitleTextbox.Text.Replace(" ", "");
+                UpdateModelFromGui();
+            }
         }
 
-        public void OnBeforeNavigate(Widget destination)
-        {
-            UpdateModel(Model);
-        }
+        //public void OnBeforeNavigate(Widget destination)
+        //{
+        //    UpdateModelFromGui();
+        //}
 
-        public override void OnNavigationReturnedBack()
-        {
-            base.OnNavigationReturnedBack();
-            UpdateFromModel(Model); //model may have changed while away
-        }
+        //public override void OnNavigationArrivedBack(Widget source)
+        //{
+        //    base.OnNavigationArrivedBack(source);
+        //    UpdateGuiFromModel(); //model may have changed while away
+        //}
     }
 }

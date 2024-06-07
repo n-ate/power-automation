@@ -1,4 +1,5 @@
-﻿using PowerAutomation.Models;
+﻿using PowerAutomation.Extensions;
+using PowerAutomation.Models;
 using System.Drawing.Imaging;
 using System.Text.Json;
 using Vanara.PInvoke;
@@ -9,7 +10,7 @@ namespace PowerAutomation
     {
         private static MainForm? _form = null;
 
-        private static Workspace[]? _workspaces = null;
+        private static WorkspaceCollection? _workspaces = null;
 
         private static JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
         {
@@ -27,7 +28,7 @@ namespace PowerAutomation
             }
         }
 
-        public static Workspace[] Workspaces
+        public static WorkspaceCollection Workspaces
         {
             get
             {
@@ -36,7 +37,7 @@ namespace PowerAutomation
                     const string path = @"C:\_\workspaces.json";
                     var json = "[]";
                     if (File.Exists(path)) json = File.ReadAllText(path);
-                    _workspaces = JsonSerializer.Deserialize<Workspace[]>(json, SerializerOptions)!;
+                    _workspaces = JsonSerializer.Deserialize<WorkspaceCollection>(json, SerializerOptions)!;
                 }
                 return _workspaces;
             }
@@ -48,6 +49,8 @@ namespace PowerAutomation
 
         public static Bitmap CaptureImage(RECT bounds)
         {
+            if (bounds.Left == bounds.Right) throw new ArgumentException("Bounds left and right cannot have the same value.", nameof(bounds));
+            if (bounds.Top == bounds.Bottom) throw new ArgumentException("Bounds top and bottom cannot have the same value.", nameof(bounds));
             var snippet = new Bitmap(bounds.Right - bounds.Left, bounds.Bottom - bounds.Top, PixelFormat.Format32bppArgb);
             using (var graphics = Graphics.FromImage(snippet))
             {
@@ -94,78 +97,82 @@ namespace PowerAutomation
         {
             Bitmap? selection = null;
             Rectangle? bounds = null;
+            var dragStart = Point.Empty;
+            var dragCurrent = Point.Empty;
 
-            App.SetNotice("Click and drag to selet area to match.");
+            var screen = App.CaptureImage(App.Form.Bounds);
+            App.SetNotice("Click and drag to select area to match.");
+            App.Form.BackgroundImage = (Bitmap)screen.AdjustSaturation(0.4f);
 
-            using (var screen = App.CaptureImage(App.Form.Bounds))
+            //App.Form.ExecuteOnUIThread(f => f.BackgroundImage = test);// Image.FromFile("C:\\_\\temp\\screen.png"));// screen);
+            var selectionTool = new Panel()
             {
-                Directory.CreateDirectory("C:\\_\\temp\\");
-                screen.Save("C:\\_\\temp\\screen.png", ImageFormat.Png);
-                //TODO: try to keep image in memory
-                App.Form.ExecuteOnUIThread(f => f.BackgroundImage = Image.FromFile("C:\\_\\temp\\screen.png"));// screen);
-                var selectionTool = new Panel()
-                {
-                    AutoSize = false,
-                    Visible = false
-                };
-                selectionTool.Paint += (s, e) =>
-                {
-                    e.Graphics.DrawRectangle(new Pen(Color.Red, 2f), 1, 1, selectionTool.Width - 2, selectionTool.Height - 2);
-                };
-                App.Form.Controls.Add(selectionTool);
-                //selectionTool.SetZOrder(1000);
+                AutoSize = false,
+                Visible = false,
+                BackColor = Color.Transparent
+            };
+            selectionTool.Paint += (s, e) =>
+            {
+                e.Graphics.DrawRectangle(new Pen(Color.Red, 2f), 1, 1, selectionTool.Width - 2, selectionTool.Height - 2);
+            };
+            App.Form.Controls.Add(selectionTool);
+            selectionTool.SetZOrder(0);
 
-                var dragStart = Point.Empty;
-                var dragCurrent = Point.Empty;
+            App.Form.MouseDown += StartImageSelection;
+            App.Form.MouseMove += ChangeImageSelection;
+            App.Form.MouseUp += FinishImageSelection;
 
-                Rectangle GetSelectionBounds()
-                {
-                    var x = Math.Min(dragStart.X, dragCurrent.X);
-                    var y = Math.Min(dragStart.Y, dragCurrent.Y);
-                    var w = Math.Max(dragStart.X, dragCurrent.X) - x;
-                    var h = Math.Max(dragStart.Y, dragCurrent.Y) - y;
-                    return new Rectangle() { X = x, Y = y, Width = w, Height = h };
-                }
-
-                void SetSelectionTool()
-                {
-                    var bounds = GetSelectionBounds();
-                    selectionTool.Top = bounds.Y - 2;
-                    selectionTool.Left = bounds.X - 2;
-                    selectionTool.Height = bounds.Height + 4;
-                    selectionTool.Width = bounds.Width + 4;
-                    selectionTool.Invalidate();
-                }
-
-                App.Form.MouseDown += (object? s, MouseEventArgs e) =>
-                {
-                    dragStart = dragCurrent = e.Location;
-                    SetSelectionTool();
-                    selectionTool.Show();
-                };
-                App.Form.MouseMove += (object? s, MouseEventArgs e) =>
-                {
-                    dragCurrent = e.Location;
-                    SetSelectionTool();
-                };
-                App.Form.MouseUp += (object? s, MouseEventArgs e) =>
-                {
-                    dragCurrent = e.Location;
-                    bounds = GetSelectionBounds();
-                    selection = App.CaptureImage(bounds.Value);
-                    Directory.CreateDirectory("C:\\_\\temp\\");
-                    selection.Save("C:\\_\\temp\\selection.png", ImageFormat.Png);
-                    App.Form.Controls.Remove(selectionTool);
-                };
+            Rectangle GetSelectionBounds()
+            {
+                var x = Math.Min(dragStart.X, dragCurrent.X);
+                var y = Math.Min(dragStart.Y, dragCurrent.Y);
+                var w = Math.Max(dragStart.X, dragCurrent.X) - x;
+                var h = Math.Max(dragStart.Y, dragCurrent.Y) - y;
+                if (w == 0) w = 1;
+                if (h == 0) h = 1;
+                return new Rectangle() { X = x, Y = y, Width = w, Height = h };
             }
+            void SetSelectionTool()
+            {
+                var bounds = GetSelectionBounds();
+                selectionTool.Top = bounds.Y - 2;
+                selectionTool.Left = bounds.X - 2;
+                selectionTool.Height = bounds.Height + 4;
+                selectionTool.Width = bounds.Width + 4;
+                selectionTool.Invalidate();
+            }
+            void StartImageSelection(object? s, MouseEventArgs e)
+            {
+                dragStart = dragCurrent = e.Location;
+                SetSelectionTool();
+                selectionTool.Show();
+            };
+            void ChangeImageSelection(object? s, MouseEventArgs e)
+            {
+                dragCurrent = e.Location;
+                SetSelectionTool();
+            };
+            void FinishImageSelection(object? s, MouseEventArgs e)
+            {
+                //unbind event handlers//
+                App.Form.MouseDown -= StartImageSelection;
+                App.Form.MouseMove -= ChangeImageSelection;
+                App.Form.MouseUp -= FinishImageSelection;
+                //remove capture specific elements//
+                App.Form.Controls.Remove(selectionTool);
+                App.SetNotice("");
+                //dispose of background image//
+                var image = App.Form.BackgroundImage;
+                App.Form.BackgroundImage = null;
+                image?.Dispose();
+                //get captured snippet//
+                dragCurrent = e.Location;
+                bounds = GetSelectionBounds();
+                selection = screen.Clone(bounds.Value, PixelFormat.Format32bppArgb);
+                screen?.Dispose();
+            };
 
             while (bounds is null || selection is null) await Task.Delay(50);
-
-            var image = App.Form.BackgroundImage;
-            App.Form.BackgroundImage = null;
-            image?.Dispose();
-
-            App.SetNotice("");
             return (selection, bounds.Value);
         }
     }

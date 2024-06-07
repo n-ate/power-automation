@@ -1,63 +1,56 @@
-﻿using n_ate.Essentials;
-using PowerAutomation.Controls;
-using PowerAutomation.Interfaces;
+﻿using PowerAutomation.Controls;
+using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
 
 namespace PowerAutomation.Widgets
 {
     public partial class WorkspaceViewerWidget : Widget, IViewWidget<Workspace>
     {
-        private Workspace Model;
+        public Workspace Model { get; }
 
-        public WorkspaceViewerWidget(Widget caller, Workspace model) : base("Workspace", caller)
+        public WorkspaceViewerWidget(Workspace model) : base("Workspace")
         {
             Model = model;
             InitializeComponent();
-            UpdateFromModel(Model);
         }
 
-        public void UpdateFromModel(Workspace model)
+        public void UpdateGuiFromModel()
         {
-            model.MapTo(Model); // copies the value of each member from model to Model..
-
-            IconImage.Image = model.Application.Icon;
-            ClassValueLabel.Text = model.Application.Class;
-            TitlebarValueLabel.Text = model.Application.Titlebar;
-            TitleLabel.Text = model.Title;
-            DescriptionValueLabel.Text = model.Description;
-        }
-
-        public override void UpdateFromModel(object model)
-        {
-            if (model is Workspace m) UpdateFromModel(m);
-            else throw new ArgumentException($"Model argument is not correct type. Expected:{nameof(Workspace)}, Actual:{model.GetType().Name}");
+            IconImage.Image = Model.Application.Icon;
+            ClassValueLabel.Text = Model.Application.Class;
+            TitlebarValueLabel.Text = Model.Application.Titlebar;
+            TitleLabel.Text = Model.Title;
+            DescriptionValueLabel.Text = Model.Description;
+            DeleteButton.Text = Model.Active ? "Delete" : "Undo Delete";
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            var widget = new WorkspaceEditorWidget(this, Model);
+            var widget = new WorkspaceEditorWidget(Model);
             NavigateForward(widget);
         }
 
         private void DetectionsButton_Click(object sender, EventArgs e)
         {
-            var widget = new DetectionsWidget(this, Model);
+            var widget = new DetectionsWidget(Model);
             NavigateForward(widget);
         }
 
         private void ProceduresButton_Click(object sender, EventArgs e)
         {
+
         }
 
-        public override void OnNavigationReturnedBack()
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
-            base.OnNavigationReturnedBack();
-
-            UpdateFromModel(Model);
+            Model.Active = !Model.Active;
+            App.SaveCurrentState();
+            NavigateBackward();
         }
 
-        public override void OnBeforeNavigate(IViewWidget destination)
+        private void CloseButton_Click(object sender, EventArgs e)
         {
+            NavigateBackward();
         }
     }
 }

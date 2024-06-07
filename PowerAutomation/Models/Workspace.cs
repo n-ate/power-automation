@@ -21,5 +21,7 @@ namespace PowerAutomation.Models
 
         [Required]
         public string Title { get; set; } = string.Empty;
+
+        public bool Active { get; set; } = true;
     }
 }

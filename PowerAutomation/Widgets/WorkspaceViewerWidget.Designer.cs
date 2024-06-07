@@ -39,13 +39,15 @@
             EditButton = new Button();
             DetectionsButton = new Button();
             ProceduresButton = new Button();
+            CloseButton = new Button();
+            DeleteButton = new Button();
             ((System.ComponentModel.ISupportInitialize)IconImage).BeginInit();
             SuspendLayout();
             // 
             // TitleLabel
             // 
             TitleLabel.AutoSize = true;
-            TitleLabel.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            TitleLabel.Font = new Font("Tahoma", 16F);
             TitleLabel.Location = new Point(57, 52);
             TitleLabel.Name = "TitleLabel";
             TitleLabel.Size = new Size(54, 27);
@@ -55,7 +57,7 @@
             // TitlebarLabel
             // 
             TitlebarLabel.AutoSize = true;
-            TitlebarLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            TitlebarLabel.Font = new Font("Tahoma", 10F);
             TitlebarLabel.ForeColor = Color.FromArgb(64, 64, 64);
             TitlebarLabel.Location = new Point(13, 91);
             TitlebarLabel.Name = "TitlebarLabel";
@@ -74,7 +76,7 @@
             // ClassLabel
             // 
             ClassLabel.AutoSize = true;
-            ClassLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ClassLabel.Font = new Font("Tahoma", 10F);
             ClassLabel.ForeColor = Color.FromArgb(64, 64, 64);
             ClassLabel.Location = new Point(13, 117);
             ClassLabel.Margin = new Padding(5, 0, 5, 0);
@@ -86,7 +88,7 @@
             // DescriptionLabel
             // 
             DescriptionLabel.AutoSize = true;
-            DescriptionLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            DescriptionLabel.Font = new Font("Tahoma", 10F);
             DescriptionLabel.ForeColor = Color.FromArgb(64, 64, 64);
             DescriptionLabel.Location = new Point(13, 144);
             DescriptionLabel.Margin = new Padding(5, 0, 5, 0);
@@ -97,7 +99,7 @@
             // 
             // DescriptionValueLabel
             // 
-            DescriptionValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            DescriptionValueLabel.Font = new Font("Tahoma", 10F);
             DescriptionValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
             DescriptionValueLabel.Location = new Point(93, 144);
             DescriptionValueLabel.Margin = new Padding(5, 0, 5, 0);
@@ -109,7 +111,7 @@
             // TitlebarValueLabel
             // 
             TitlebarValueLabel.AutoSize = true;
-            TitlebarValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            TitlebarValueLabel.Font = new Font("Tahoma", 10F);
             TitlebarValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
             TitlebarValueLabel.Location = new Point(93, 91);
             TitlebarValueLabel.Name = "TitlebarValueLabel";
@@ -120,7 +122,7 @@
             // ClassValueLabel
             // 
             ClassValueLabel.AutoSize = true;
-            ClassValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ClassValueLabel.Font = new Font("Tahoma", 10F);
             ClassValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
             ClassValueLabel.Location = new Point(93, 117);
             ClassValueLabel.Margin = new Padding(5, 0, 5, 0);
@@ -131,10 +133,11 @@
             // 
             // EditButton
             // 
+            EditButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             EditButton.BackColor = SystemColors.ButtonFace;
             EditButton.FlatStyle = FlatStyle.Flat;
-            EditButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            EditButton.Location = new Point(13, 284);
+            EditButton.Font = new Font("Tahoma", 12F);
+            EditButton.Location = new Point(13, 356);
             EditButton.Name = "EditButton";
             EditButton.Size = new Size(100, 32);
             EditButton.TabIndex = 1025;
@@ -146,10 +149,10 @@
             // 
             DetectionsButton.BackColor = SystemColors.ButtonFace;
             DetectionsButton.FlatStyle = FlatStyle.Flat;
-            DetectionsButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            DetectionsButton.Location = new Point(125, 284);
+            DetectionsButton.Font = new Font("Tahoma", 12F);
+            DetectionsButton.Location = new Point(71, 268);
             DetectionsButton.Name = "DetectionsButton";
-            DetectionsButton.Size = new Size(100, 32);
+            DetectionsButton.Size = new Size(214, 32);
             DetectionsButton.TabIndex = 1026;
             DetectionsButton.Text = "Detections";
             DetectionsButton.UseVisualStyleBackColor = false;
@@ -159,21 +162,52 @@
             // 
             ProceduresButton.BackColor = SystemColors.ButtonFace;
             ProceduresButton.FlatStyle = FlatStyle.Flat;
-            ProceduresButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            ProceduresButton.Location = new Point(237, 284);
+            ProceduresButton.Font = new Font("Tahoma", 12F);
+            ProceduresButton.Location = new Point(71, 306);
             ProceduresButton.Name = "ProceduresButton";
-            ProceduresButton.Size = new Size(100, 32);
+            ProceduresButton.Size = new Size(214, 32);
             ProceduresButton.TabIndex = 1027;
             ProceduresButton.Text = "Procedures";
             ProceduresButton.UseVisualStyleBackColor = false;
             ProceduresButton.Click += ProceduresButton_Click;
             // 
+            // CloseButton
+            // 
+            CloseButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            CloseButton.BackColor = SystemColors.ButtonFace;
+            CloseButton.FlatStyle = FlatStyle.Flat;
+            CloseButton.Font = new Font("Tahoma", 12F);
+            CloseButton.Location = new Point(237, 356);
+            CloseButton.Name = "CloseButton";
+            CloseButton.Size = new Size(100, 32);
+            CloseButton.TabIndex = 1025;
+            CloseButton.Text = "Close";
+            CloseButton.UseVisualStyleBackColor = false;
+            CloseButton.Click += CloseButton_Click;
+            // 
+            // DeleteButton
+            // 
+            DeleteButton.Anchor = AnchorStyles.Bottom;
+            DeleteButton.BackColor = SystemColors.ButtonFace;
+            DeleteButton.FlatStyle = FlatStyle.Flat;
+            DeleteButton.Font = new Font("Tahoma", 12F);
+            DeleteButton.ForeColor = Color.FromArgb(192, 0, 0);
+            DeleteButton.Location = new Point(125, 356);
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(100, 32);
+            DeleteButton.TabIndex = 1028;
+            DeleteButton.Text = "Delete";
+            DeleteButton.UseVisualStyleBackColor = false;
+            DeleteButton.Click += DeleteButton_Click;
+            // 
             // WorkspaceViewerWidget
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(DeleteButton);
             Controls.Add(ProceduresButton);
             Controls.Add(DetectionsButton);
+            Controls.Add(CloseButton);
             Controls.Add(EditButton);
             Controls.Add(DescriptionValueLabel);
             Controls.Add(TitlebarValueLabel);
@@ -184,7 +218,7 @@
             Controls.Add(IconImage);
             Controls.Add(TitleLabel);
             Name = "WorkspaceViewerWidget";
-            Size = new Size(350, 331);
+            Size = new Size(350, 403);
             Controls.SetChildIndex(TitleLabel, 0);
             Controls.SetChildIndex(IconImage, 0);
             Controls.SetChildIndex(ClassLabel, 0);
@@ -194,8 +228,10 @@
             Controls.SetChildIndex(TitlebarValueLabel, 0);
             Controls.SetChildIndex(DescriptionValueLabel, 0);
             Controls.SetChildIndex(EditButton, 0);
+            Controls.SetChildIndex(CloseButton, 0);
             Controls.SetChildIndex(DetectionsButton, 0);
             Controls.SetChildIndex(ProceduresButton, 0);
+            Controls.SetChildIndex(DeleteButton, 0);
             ((System.ComponentModel.ISupportInitialize)IconImage).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -213,5 +249,7 @@
         private Button EditButton;
         private Button DetectionsButton;
         private Button ProceduresButton;
+        private Button CloseButton;
+        private Button DeleteButton;
     }
 }

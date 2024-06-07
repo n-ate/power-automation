@@ -1,39 +1,55 @@
 ﻿using PowerAutomation.Controls;
-using PowerAutomation.Interfaces;
+using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
 using System.Drawing.Imaging;
 using Vanara.PInvoke;
 
 namespace PowerAutomation.Widgets
 {
-    public partial class WorkspaceEditorWidget : Widget, IViewWidget<Workspace>
+    public partial class WorkspaceEditorWidget : Widget, IEditWidget<Workspace>
     {
-        private Workspace Model;
-
-        public WorkspaceEditorWidget(Widget caller, Workspace model) : base("Workspace", caller)
+        public WorkspaceEditorWidget(Workspace model) : base("Workspace")
         {
             Model = model;
             InitializeComponent();
-            UpdateFromModel(Model);
         }
 
-        public override void OnBeforeNavigate(IViewWidget destination)
+        public Workspace Model { get; }
+
+        public override void OnBeforeNavigation(Widget destination)
         {
             if (string.IsNullOrEmpty(TitleTextbox.Text))
             {
                 TitleTextbox.Text = "AutoSaved";
             }
 
-            UpdateModel();
+            UpdateModelFromGui();
             App.SaveCurrentState();
-            destination.UpdateFromModel(Model);
         }
 
-        public override void OnNavigationReturnedBack()
+        public override void OnNavigationArrivedBack(Widget source)
         {
-            base.OnNavigationReturnedBack();
+            base.OnNavigationArrivedBack(source);
+            UpdateGuiFromModel();
+        }
 
-            UpdateFromModel(Model);
+        public void UpdateGuiFromModel()
+        {
+            IconImage.Image = Model.Application.Icon;
+            ClassTextbox.Text = Model.Application.Class;
+            TitlebarTextbox.Text = Model.Application.Titlebar;
+            TitleTextbox.Text = Model.Title;
+            DescriptionTextbox.Text = Model.Description;
+        }
+
+        public void UpdateModelFromGui()
+        {
+            var icon = IconImage.Image as Bitmap;
+            if (icon is not null) Model.Application.Icon = icon;
+            Model.Application.Class = ClassTextbox.Text;
+            Model.Application.Titlebar = TitlebarTextbox.Text;
+            Model.Title = TitleTextbox.Text;
+            Model.Description = DescriptionTextbox.Text;
         }
 
         private void AppInfoTextbox_Click(object sender, EventArgs e)
@@ -43,7 +59,8 @@ namespace PowerAutomation.Widgets
 
         private void ContinueButton_Click(object sender, EventArgs e)
         {
-            var widget = new WorkspaceViewerWidget(this, Model);
+            //TODO: Navigate forward should set the caller, also navigate replace..~
+            var widget = new WorkspaceViewerWidget(Model); //use call so that navigate backward will skip this control
             NavigateForward(widget);
         }
 
@@ -59,7 +76,7 @@ namespace PowerAutomation.Widgets
             using (var image = App.CaptureImage(bounds))
             {
                 Directory.CreateDirectory("C:\\_\\temp\\");
-                image.Save("C:\\_\\temp\\test.png", ImageFormat.Png);
+                image.Save("C:\\_\\temp\\test.png", ImageFormat.Png);//TODO: keep images in memory and saved to workspace..
                 //var difference = image.GetPercentageDifference(image, 0);
             }
 
@@ -79,31 +96,6 @@ namespace PowerAutomation.Widgets
             Show();
             App.SetNotice("");
             //NavigateForward(new ImageAnnotationWidget(this));
-        }
-
-        public void UpdateFromModel(Workspace model)
-        {
-            IconImage.Image = model.Application.Icon;
-            ClassTextbox.Text = model.Application.Class;
-            TitlebarTextbox.Text = model.Application.Titlebar;
-            TitleTextbox.Text = model.Title;
-            DescriptionTextbox.Text = model.Description;
-        }
-
-        public override void UpdateFromModel(object model)
-        {
-            if (model is Workspace m) UpdateFromModel(m);
-            else throw new ArgumentException($"Model argument is not correct type. Expected:{nameof(Workspace)}, Actual:{model.GetType().Name}");
-        }
-
-        private void UpdateModel()
-        {
-            var icon = IconImage.Image as Bitmap;
-            if (icon is not null) Model.Application.Icon = icon;
-            Model.Application.Class = ClassTextbox.Text;
-            Model.Application.Titlebar = TitlebarTextbox.Text;
-            Model.Title = TitleTextbox.Text;
-            Model.Description = DescriptionTextbox.Text;
         }
     }
 }
