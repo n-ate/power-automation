@@ -38,10 +38,10 @@ namespace PowerAutomation
             if (icon is not null)
             {
                 result.Icon = icon.ToBitmap();
-                using (var stream = File.Create(@"C:\_\temp\app.ico"))
-                {
-                    icon.Save(stream);
-                }
+                //using (var stream = File.Create(@"C:\_\temp\app.ico"))
+                //{
+                //    icon.Save(stream);
+                //}
             }
 
             result.Class = WinOS.GetClassNameForWindow(handle) ?? "<unknown>";
