@@ -114,6 +114,8 @@ namespace PowerAutomation
 
         public static Bitmap CaptureImage(RECT bounds)
         {
+            if (bounds.Left == bounds.Right) throw new ArgumentException("Bounds left and right cannot have the same value.", nameof(bounds));
+            if (bounds.Top == bounds.Bottom) throw new ArgumentException("Bounds top and bottom cannot have the same value.", nameof(bounds));
             var snippet = new Bitmap(bounds.Right - bounds.Left, bounds.Bottom - bounds.Top, PixelFormat.Format32bppArgb);
             using (var graphics = Graphics.FromImage(snippet))
             {

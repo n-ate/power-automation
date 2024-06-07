@@ -1,6 +1,8 @@
 ﻿using PowerAutomation.Controls;
 using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
+using System.Drawing.Imaging;
+using Vanara.PInvoke;
 
 namespace PowerAutomation.Widgets
 {
@@ -10,7 +12,7 @@ namespace PowerAutomation.Widgets
         {
             Model = model;
             InitializeComponent();
-            UpdateGuiFromModel();
+            //UpdateGuiFromModel();
         }
 
         public Workspace Model { get; }
@@ -24,8 +26,6 @@ namespace PowerAutomation.Widgets
 
             UpdateModelFromGui();
             App.SaveCurrentState();
-
-            base.OnBeforeNavigation(destination);
         }
 
         public override void OnNavigationArrivedBack(Widget source)
@@ -82,6 +82,19 @@ namespace PowerAutomation.Widgets
             //    image.Save("C:\\_\\temp\\test.png", ImageFormat.Png);
             //    //var difference = image.GetPercentageDifference(image, 0);
             //}
+
+            //var icon = WinOS.GetIconForWindow(handle);
+            //if (icon is not null)
+            //{
+            //    IconImage.Image = icon.ToBitmap();
+            //    using (var stream = File.Create(@"C:\_\temp\app.ico"))
+            //    {
+            //        icon.Save(stream);
+            //    }
+            //}
+
+            //ClassTextbox.Text = WinOS.GetClassNameForWindow(handle) ?? "<unknown>";
+            //TitlebarTextbox.Text = WinOS.GetWindowTitlebarTextForWindow(handle) ?? "<unknown>";
 
             var info = await WinOS.GetApplicationInformation(handle);
             IconImage.Image = info.Icon;

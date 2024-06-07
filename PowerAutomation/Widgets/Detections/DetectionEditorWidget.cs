@@ -1,7 +1,9 @@
 ﻿using PowerAutomation.Controls;
+using PowerAutomation.Controls.Extensions;
 using PowerAutomation.Controls.Interfaces;
 using PowerAutomation.Models;
 using PowerAutomation.Models.Detection;
+using SimpleImageComparisonClassLibrary.ExtensionMethods;
 using Vanara.PInvoke;
 
 namespace PowerAutomation.Widgets
@@ -21,7 +23,8 @@ namespace PowerAutomation.Widgets
         public ApplicationInformation AppInfo { get; }
         public ImageDetection Model { get; }
 
-        public Bounds SelectionLocation { get; private set; }
+        public Bounds GuiImageLocation { get; private set; }
+        public Bitmap GuiImage { get; private set; }
 
         public override void OnBeforeNavigation(Widget destination)
         {
@@ -38,9 +41,10 @@ namespace PowerAutomation.Widgets
 
         public void UpdateGuiFromModel()
         {
-            SelectedImage.Image = Model.MatchImage;
-            SelectionLocation = Model.Location;
-            LocationLabel.Text = $"top:{SelectionLocation.Top}, left:{SelectionLocation.Left}, h:{SelectionLocation.Height}, w:{SelectionLocation.Width}";
+            GuiImage = Model.MatchImage;
+            SelectedImage.Image = Model.MatchImage.GetResizedImage(SelectedImage.Width, SelectedImage.Height);
+            GuiImageLocation = Model.Location;
+            LocationLabel.Text = $"top:{Model.Location.Top}, left:{Model.Location.Left}, h:{Model.Location.Height}, w:{Model.Location.Width}";
             TitleTextbox.Text = Model.Title;
             KeyTextbox.Text = Model.Key;
             DescriptionTextbox.Text = Model.Description;
@@ -59,8 +63,8 @@ namespace PowerAutomation.Widgets
 
         public void UpdateModelFromGui()
         {
-            Model.MatchImage = (SelectedImage.Image as Bitmap)!;
-            Model.Location = SelectionLocation;
+            Model.MatchImage = GuiImage;
+            Model.Location = GuiImageLocation;
             Model.Key = KeyTextbox.Text;
             Model.Title = TitleTextbox.Text;
             Model.Description = DescriptionTextbox.Text;

@@ -1,4 +1,6 @@
-﻿namespace PowerAutomation.Widgets
+﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+
+namespace PowerAutomation.Widgets
 {
     partial class WorkspaceViewerWidget
     {
@@ -39,6 +41,8 @@
             EditButton = new Button();
             DetectionsButton = new Button();
             ProceduresButton = new Button();
+            CloseButton = new Button();
+            DeleteButton = new Button();
             AppTypeValueLabel = new Label();
             AppTypeLabel = new Label();
             ModuleNameValueLabel = new Label();
@@ -49,7 +53,7 @@
             // TitleLabel
             // 
             TitleLabel.AutoSize = true;
-            TitleLabel.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            TitleLabel.Font = new Font("Tahoma", 16F);
             TitleLabel.Location = new Point(57, 52);
             TitleLabel.Name = "TitleLabel";
             TitleLabel.Size = new Size(70, 27);
@@ -59,7 +63,7 @@
             // ProcessNameLabel
             // 
             ProcessNameLabel.AutoSize = true;
-            ProcessNameLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ProcessNameLabel.Font = new Font("Tahoma", 10F);
             ProcessNameLabel.ForeColor = Color.FromArgb(64, 64, 64);
             ProcessNameLabel.Location = new Point(14, 124);
             ProcessNameLabel.Name = "ProcessNameLabel";
@@ -78,7 +82,7 @@
             // ClassLabel
             // 
             ClassLabel.AutoSize = true;
-            ClassLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ClassLabel.Font = new Font("Tahoma", 10F);
             ClassLabel.ForeColor = Color.FromArgb(64, 64, 64);
             ClassLabel.Location = new Point(14, 185);
             ClassLabel.Margin = new Padding(5, 0, 5, 0);
@@ -90,7 +94,7 @@
             // DescriptionLabel
             // 
             DescriptionLabel.AutoSize = true;
-            DescriptionLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            DescriptionLabel.Font = new Font("Tahoma", 10F);
             DescriptionLabel.ForeColor = Color.FromArgb(64, 64, 64);
             DescriptionLabel.Location = new Point(14, 212);
             DescriptionLabel.Margin = new Padding(5, 0, 5, 0);
@@ -101,7 +105,7 @@
             // 
             // DescriptionValueLabel
             // 
-            DescriptionValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            DescriptionValueLabel.Font = new Font("Tahoma", 10F);
             DescriptionValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
             DescriptionValueLabel.Location = new Point(94, 212);
             DescriptionValueLabel.Margin = new Padding(5, 0, 5, 0);
@@ -113,7 +117,7 @@
             // ProcessNameValueLabel
             // 
             ProcessNameValueLabel.AutoSize = true;
-            ProcessNameValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ProcessNameValueLabel.Font = new Font("Tahoma", 10F);
             ProcessNameValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
             ProcessNameValueLabel.Location = new Point(94, 124);
             ProcessNameValueLabel.Name = "ProcessNameValueLabel";
@@ -124,7 +128,7 @@
             // ClassValueLabel
             // 
             ClassValueLabel.AutoSize = true;
-            ClassValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ClassValueLabel.Font = new Font("Tahoma", 10F);
             ClassValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
             ClassValueLabel.Location = new Point(94, 185);
             ClassValueLabel.Margin = new Padding(5, 0, 5, 0);
@@ -135,10 +139,11 @@
             // 
             // EditButton
             // 
+            EditButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             EditButton.BackColor = SystemColors.ButtonFace;
             EditButton.FlatStyle = FlatStyle.Flat;
-            EditButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            EditButton.Location = new Point(14, 352);
+            EditButton.Font = new Font("Tahoma", 12F);
+            EditButton.Location = new Point(14, 431);
             EditButton.Name = "EditButton";
             EditButton.Size = new Size(100, 32);
             EditButton.TabIndex = 1025;
@@ -150,10 +155,10 @@
             // 
             DetectionsButton.BackColor = SystemColors.ButtonFace;
             DetectionsButton.FlatStyle = FlatStyle.Flat;
-            DetectionsButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            DetectionsButton.Location = new Point(126, 352);
+            DetectionsButton.Font = new Font("Tahoma", 12F);
+            DetectionsButton.Location = new Point(57, 336);
             DetectionsButton.Name = "DetectionsButton";
-            DetectionsButton.Size = new Size(100, 32);
+            DetectionsButton.Size = new Size(226, 32);
             DetectionsButton.TabIndex = 1026;
             DetectionsButton.Text = "Detections";
             DetectionsButton.UseVisualStyleBackColor = false;
@@ -163,19 +168,48 @@
             // 
             ProceduresButton.BackColor = SystemColors.ButtonFace;
             ProceduresButton.FlatStyle = FlatStyle.Flat;
-            ProceduresButton.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            ProceduresButton.Location = new Point(238, 352);
+            ProceduresButton.Font = new Font("Tahoma", 12F);
+            ProceduresButton.Location = new Point(57, 384);
             ProceduresButton.Name = "ProceduresButton";
-            ProceduresButton.Size = new Size(100, 32);
+            ProceduresButton.Size = new Size(226, 32);
             ProceduresButton.TabIndex = 1027;
             ProceduresButton.Text = "Procedures";
             ProceduresButton.UseVisualStyleBackColor = false;
             ProceduresButton.Click += ProceduresButton_Click;
             // 
+            // CloseButton
+            // 
+            CloseButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            CloseButton.BackColor = SystemColors.ButtonFace;
+            CloseButton.FlatStyle = FlatStyle.Flat;
+            CloseButton.Font = new Font("Tahoma", 12F);
+            CloseButton.Location = new Point(237, 431);
+            CloseButton.Name = "CloseButton";
+            CloseButton.Size = new Size(100, 32);
+            CloseButton.TabIndex = 1025;
+            CloseButton.Text = "Close";
+            CloseButton.UseVisualStyleBackColor = false;
+            CloseButton.Click += CloseButton_Click;
+            // 
+            // DeleteButton
+            // 
+            DeleteButton.Anchor = AnchorStyles.Bottom;
+            DeleteButton.BackColor = SystemColors.ButtonFace;
+            DeleteButton.FlatStyle = FlatStyle.Flat;
+            DeleteButton.Font = new Font("Tahoma", 12F);
+            DeleteButton.ForeColor = Color.FromArgb(192, 0, 0);
+            DeleteButton.Location = new Point(125, 431);
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(100, 32);
+            DeleteButton.TabIndex = 1028;
+            DeleteButton.Text = "Delete";
+            DeleteButton.UseVisualStyleBackColor = false;
+            DeleteButton.Click += DeleteButton_Click;
+            // 
             // AppTypeValueLabel
             // 
             AppTypeValueLabel.AutoSize = true;
-            AppTypeValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            AppTypeValueLabel.Font = new Font("Tahoma", 10F);
             AppTypeValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
             AppTypeValueLabel.Location = new Point(94, 95);
             AppTypeValueLabel.Name = "AppTypeValueLabel";
@@ -186,7 +220,7 @@
             // AppTypeLabel
             // 
             AppTypeLabel.AutoSize = true;
-            AppTypeLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            AppTypeLabel.Font = new Font("Tahoma", 10F);
             AppTypeLabel.ForeColor = Color.FromArgb(64, 64, 64);
             AppTypeLabel.Location = new Point(14, 95);
             AppTypeLabel.Name = "AppTypeLabel";
@@ -197,7 +231,7 @@
             // ModuleNameValueLabel
             // 
             ModuleNameValueLabel.AutoSize = true;
-            ModuleNameValueLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ModuleNameValueLabel.Font = new Font("Tahoma", 10F);
             ModuleNameValueLabel.ForeColor = Color.FromArgb(64, 64, 64);
             ModuleNameValueLabel.Location = new Point(94, 155);
             ModuleNameValueLabel.Name = "ModuleNameValueLabel";
@@ -208,7 +242,7 @@
             // ModuleNameLabel
             // 
             ModuleNameLabel.AutoSize = true;
-            ModuleNameLabel.Font = new Font("Tahoma", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            ModuleNameLabel.Font = new Font("Tahoma", 10F);
             ModuleNameLabel.ForeColor = Color.FromArgb(64, 64, 64);
             ModuleNameLabel.Location = new Point(14, 155);
             ModuleNameLabel.Name = "ModuleNameLabel";
@@ -235,8 +269,12 @@
             Controls.Add(ClassLabel);
             Controls.Add(IconImage);
             Controls.Add(TitleLabel);
+            Controls.Add(DeleteButton);
+            Controls.Add(CloseButton);
             Name = "WorkspaceViewerWidget";
-            Size = new Size(350, 400);
+            Size = new Size(350, 475);
+            Controls.SetChildIndex(CloseButton, 0);
+            Controls.SetChildIndex(DeleteButton, 0);
             Controls.SetChildIndex(TitleLabel, 0);
             Controls.SetChildIndex(IconImage, 0);
             Controls.SetChildIndex(ClassLabel, 0);
@@ -273,5 +311,7 @@
         private Label AppTypeLabel;
         private Label ModuleNameValueLabel;
         private Label ModuleNameLabel;
+        private Button CloseButton;
+        private Button DeleteButton;
     }
 }

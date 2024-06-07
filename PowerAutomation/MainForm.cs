@@ -5,7 +5,7 @@ namespace PowerAutomation
     {
         public MainForm()
         {
-            TransparencyKey = BackColor = Color.Magenta; //makes window background transparent and click-through
+            TransparencyKey = BackColor = App.TransparencyColor; //makes window background transparent and click-through
             WindowState = FormWindowState.Maximized;
 
             InitializeComponent();

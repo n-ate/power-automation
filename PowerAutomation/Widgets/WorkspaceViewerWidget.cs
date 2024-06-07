@@ -13,7 +13,7 @@ namespace PowerAutomation.Widgets
         {
             Model = model;
             InitializeComponent();
-            UpdateGuiFromModel();
+            //UpdateGuiFromModel();
         }
 
         public void UpdateGuiFromModel()
@@ -25,6 +25,7 @@ namespace PowerAutomation.Widgets
             ModuleNameValueLabel.Text = Model.Application.ModuleName;
             ClassValueLabel.Text = Model.Application.Class;
             DescriptionValueLabel.Text = Model.Description;
+            DeleteButton.Text = Model.Active ? "Delete" : "Undo Delete";
         }
 
         private void EditButton_Click(object sender, EventArgs e)
@@ -51,9 +52,16 @@ namespace PowerAutomation.Widgets
             UpdateGuiFromModel();
         }
 
-        public override void OnBeforeNavigation(Widget destination)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
-            base.OnBeforeNavigation(destination);
+            Model.Active = !Model.Active;
+            App.SaveCurrentState();
+            NavigateBackward();
+        }
+
+        private void CloseButton_Click(object sender, EventArgs e)
+        {
+            NavigateBackward();
         }
     }
 }
