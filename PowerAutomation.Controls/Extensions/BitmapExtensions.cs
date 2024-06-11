@@ -1,4 +1,5 @@
-﻿using System.Drawing.Imaging;
+﻿using SimpleImageComparisonClassLibrary.ExtensionMethods;
+using System.Drawing.Imaging;
 
 namespace PowerAutomation.Extensions
 {
@@ -47,6 +48,11 @@ namespace PowerAutomation.Extensions
                 );
             }
             return result;
+        }
+
+        public static Image GetResizedImage(this Bitmap subject, int maxWidth, int maxHeight, bool maintainAspectRation = true)
+        {
+            return subject.GetResizedImage(maxWidth, maxHeight, maintainAspectRation);
         }
     }
 }

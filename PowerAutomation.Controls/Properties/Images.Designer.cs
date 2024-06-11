@@ -22,7 +22,7 @@ namespace PowerAutomation.Controls.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Images {
+    public class Images {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace PowerAutomation.Controls.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PowerAutomation.Controls.Properties.Images", typeof(Images).Assembly);
@@ -51,7 +51,7 @@ namespace PowerAutomation.Controls.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,9 +63,9 @@ namespace PowerAutomation.Controls.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap back_arrow_32 {
+        public static System.Drawing.Bitmap action_32 {
             get {
-                object obj = ResourceManager.GetObject("back_arrow_32", resourceCulture);
+                object obj = ResourceManager.GetObject("action_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,59 @@ namespace PowerAutomation.Controls.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap back_arrow_light_32 {
+        public static System.Drawing.Bitmap back_arrow_32 {
             get {
-                object obj = ResourceManager.GetObject("back_arrow_light_32", resourceCulture);
+                object obj = ResourceManager.GetObject("back-arrow-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap back_arrow_light_32 {
+            get {
+                object obj = ResourceManager.GetObject("back-arrow-light-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap composite_32 {
+            get {
+                object obj = ResourceManager.GetObject("composite_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap composite_icon {
+            get {
+                object obj = ResourceManager.GetObject("composite-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap refresh_picture_64 {
+            get {
+                object obj = ResourceManager.GetObject("refresh-picture_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap snippet_select_64 {
+            get {
+                object obj = ResourceManager.GetObject("snippet-select_64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

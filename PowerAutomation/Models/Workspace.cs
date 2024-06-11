@@ -1,4 +1,5 @@
-﻿using PowerAutomation.Models.Detection;
+﻿using PowerAutomation.Interfaces;
+using PowerAutomation.Models.Detection;
 using System.ComponentModel.DataAnnotations;
 
 namespace PowerAutomation.Models
@@ -14,10 +15,10 @@ namespace PowerAutomation.Models
         /// Detection operations return true if the condition to detect is found.
         /// </summary>
         [Required]
-        public ImageDetection[] Detections { get; set; } = new ImageDetection[0];
+        public DetectionCollection Detections { get; set; } = [];
 
         [Required]
-        public IProcedure[] Procedures { get; set; } = Array.Empty<IProcedure>();
+        public ProcedureCollection Procedures { get; set; } = [];
 
         [Required]
         public string Title { get; set; } = string.Empty;

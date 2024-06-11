@@ -31,8 +31,10 @@ namespace PowerAutomation.Controls
 
         public void NavigateBackward()
         {
-            ReplaceWidget(this, Caller);
-            Caller.OnNavigationArrivedBack(this); // pseudo event
+            var destination = Caller;
+            ReplaceWidget(this, destination);
+            destination.OnNavigationArrivedBack(this); // pseudo event
+            if (destination is IViewControl d) d.UpdateGuiFromModel();
         }
 
         public void NavigateForward(Widget destination)
@@ -40,6 +42,7 @@ namespace PowerAutomation.Controls
             destination.Caller = this;
             ReplaceWidget(this, destination);
             destination.OnNavigationArrivedForward(this); // pseudo event
+            if (destination is IViewControl d) d.UpdateGuiFromModel();
         }
 
         public void NavigateReplace(Widget destination)
@@ -47,6 +50,7 @@ namespace PowerAutomation.Controls
             destination.Caller = Caller;
             ReplaceWidget(this, destination);
             destination.OnNavigationArrivedForward(this); // pseudo event
+            if (destination is IViewControl d) d.UpdateGuiFromModel();
         }
 
         public virtual void OnBeforeNavigation(Widget destination)
@@ -121,7 +125,6 @@ namespace PowerAutomation.Controls
 
             replacement.Location = current.Location;
             current.OnBeforeNavigation(replacement); // pseudo event
-            if (replacement is IViewWidget r) r.UpdateGuiFromModel();
             var zOrder = current.GetZOrder();
             if (replacement == Widget.ApplicationRoot)
             {

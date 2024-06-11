@@ -1,6 +1,9 @@
-﻿using PowerAutomation.Extensions;
+﻿using Microsoft.Extensions.Options;
+using n_ate.Essentials.Serialization;
+using PowerAutomation.Extensions;
 using PowerAutomation.Models;
 using System.Drawing.Imaging;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 using Vanara.PInvoke;
 
@@ -12,12 +15,20 @@ namespace PowerAutomation
 
         private static WorkspaceCollection? _workspaces = null;
 
-        private static JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
+        private static JsonSerializerOptions SerializerOptions
         {
-            WriteIndented = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            PropertyNameCaseInsensitive = true
-        };
+            get
+            {
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    PropertyNameCaseInsensitive = true
+                };
+                options.Converters.Add(new InterfaceAutoResolveConverter());
+                return options;
+            }
+        }
         public static readonly Color TransparencyColor = Color.Magenta;
 
         public static MainForm Form

@@ -1,10 +1,37 @@
 ﻿using System.Collections.Concurrent;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace PowerAutomation
 {
     public static class ControlExtensions
     {
         private static ConcurrentDictionary<string, CancellationTokenSource> _enquedUIChanges = new ConcurrentDictionary<string, CancellationTokenSource>();
+
+        public static Control Copy(this Control subject, string namePrefix)
+        {
+            var copy = Activator.CreateInstance(subject.GetType()) as Control;
+            if (copy is null) throw new ArgumentNullException(nameof(copy));
+            var binding = BindingFlags.Public | BindingFlags.Instance;
+            foreach (PropertyInfo property in subject.GetType().GetProperties(binding))
+            {
+                if (IsWinFormControlDesignerProperty(property) && property.CanRead && property.CanWrite)
+                {
+                    object? val = property.GetValue(subject);
+                    property.SetValue(copy, val, null);
+                }
+                else
+                {
+
+                }
+            }
+            copy.Name = namePrefix + subject.Name; //prefix all of control names.
+            foreach (Control control in subject.Controls)
+            {
+                copy.Controls.Add(control.Copy(namePrefix));
+            }
+            return copy;
+        }
 
         /// <summary>
         /// Runs the action after the delay has occurred. If called again during the delay, the delay is restarted.
@@ -133,6 +160,23 @@ namespace PowerAutomation
         public static bool IsParentOf(this Control parent, Control child)
         {
             return child.IsChildOf(parent);
+        }
+
+        public static bool IsWinFormControlDesignerProperty(this PropertyInfo prop)
+        {
+            var browsable = prop.GetCustomAttribute<BrowsableAttribute>(true);
+            var editorBrowsable = prop.GetCustomAttribute<EditorBrowsableAttribute>(true);
+            var defaultValue = prop.GetCustomAttribute<DefaultValueAttribute>(true);
+            var category = prop.GetCustomAttribute<CategoryAttribute>(true);
+
+            return
+                prop.CanWrite &&
+                (
+                    browsable?.Browsable ?? false ||
+                    editorBrowsable?.State != EditorBrowsableState.Always ||
+                    defaultValue is not null ||
+                    category is not null
+                );
         }
 
         /// <summary>

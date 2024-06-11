@@ -2,23 +2,43 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="n-ate.Essentials" Version="8.0.1" />
-    <PackageReference Include="SharpHook" Version="5.1.0" />
+    <PackageReference Include="n-ate.Essentials" Version="8.0.2" />
+    <PackageReference Include="SharpHook" Version="5.3.6" />
     <PackageReference Include="SimpleImageComparisonClassLibrary" Version="2.0.1" />
-    <PackageReference Include="Vanara.PInvoke.User32" Version="3.4.16" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.6" />
+    <PackageReference Include="Vanara.PInvoke.User32" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PowerAutomation.Controls\PowerAutomation.Controls.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\Detections\DetectionSelectorWidget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\Procedures\ActionProcedureEditorWidget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

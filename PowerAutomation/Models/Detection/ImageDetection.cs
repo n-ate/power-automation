@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PowerAutomation.Interfaces;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing.Imaging;
 using System.Text.Json.Serialization;
 
 namespace PowerAutomation.Models.Detection
 {
-    public class ImageDetection
+    public class ImageDetection : IDetection
     {
         public string Description { get; set; } = string.Empty;
 

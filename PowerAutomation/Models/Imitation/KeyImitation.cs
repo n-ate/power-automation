@@ -1,4 +1,8 @@
-﻿namespace PowerAutomation.Models.Imitation
+﻿// Ignore Spelling: Ctrl
+
+using PowerAutomation.Interfaces;
+
+namespace PowerAutomation.Models.Imitation
 {
     public class KeyImitation : IImitation
     {
